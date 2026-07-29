@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+ 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  
+  <!-- Primary SEO Meta Tags -->
+<title>ImaaiWebTool – Free Digital Business Tools for Shopkeepers & Professionals</title>
+
+<meta name="description" content="ImaaiWebTool offers simple, free digital tools for shopkeepers, small businesses, electricians, plumbers, and professionals. Manage billing, ledger, visiting cards, attendance, and trip records — all on one lightweight platform. Formerly known as Digitalkaro. No subscription required.">
+
+<meta name="keywords" content="ImaaiWebTool, Digitalkaro, free business tools, online billing tools, free billing for shopkeepers, digital ledger, khata tools, attendance tools, visiting card maker, trip record app, small business management, kirana shop billing, mobile business tools, free digital utilities">
+
+<meta name="author" content="ImaaiWebTool">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f2b4b">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://www.imaaiwebtool.com/">
+
+<!-- Language -->
+<meta http-equiv="Content-Language" content="hi, en">
+
+<!-- Open Graph / Social Sharing Metadata -->
+<meta property="og:title" content="ImaaiWebTool – Free Digital Business Tools for Shopkeepers & Professionals">
+
+<meta property="og:description" content="Simple, free digital tools for billing, ledger, visiting cards, attendance, and trip records. Built for shopkeepers, electricians, plumbers, and small business owners.">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.imaaiwebtool.com/">
+<meta property="og:image" content="https://www.imaaiwebtool.com/images/og-image-temp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="ImaaiWebTool">
+
+<!-- Twitter Card Metadata -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ImaaiWebTool – Free Digital Business Tools">
+<meta name="twitter:description" content="Free billing, ledger, visiting card, attendance & trip tools for shopkeepers and professionals. No subscription needed.">
+<meta name="twitter:image" content="https://www.imaaiwebtool.com/images/og-image-temp.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230f2b4b'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='white'%3E🧰%3C/text%3E%3C/svg%3E">
+
+<!-- Structured Data / Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ImaaiWebTool",
+  "url": "https://www.imaaiwebtool.com/",
+  "description": "Free digital business tools for shopkeepers, small businesses, and professionals. Includes billing, ledger, visiting card maker, attendance tracker, and trip timeline recorder.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "ImaaiWebTool"
+  }
+}
+</script>
+
+<title>ImaaiWebTool • Free Business Tools</title>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+      background: #f6f7fb;
+      color: #1e293b;
+      line-height: 1.5;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      background: #ffffff;
+      min-height: 100vh;
+      box-shadow: 0 0 30px rgba(0,0,0,0.03);
+      padding: 0 18px 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0 12px;
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      z-index: 20;
+      border-bottom: 1px solid rgba(0,0,0,0.02);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #0f2b4b, #1e4a6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hamburger {
+      background: #f1f5f9;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #1e293b;
+      border-radius: 10px;
+      transition: 0.2s;
+    }
+
+    .hamburger:hover {
+      background: #e2e8f0;
+    }
+
+    /* Side menu */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 100vh;
+      background: #ffffff;
+      box-shadow: -8px 0 25px rgba(0,0,0,0.06);
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.open {
+      transform: translateX(0);
+    }
+
+    .close-btn {
+      align-self: flex-end;
+      background: #f1f5f9;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-bottom: 20px;
+      color: #334155;
+    }
+
+    .side-menu a {
+      text-decoration: none;
+      color: #1e293b;
+      font-weight: 500;
+      padding: 14px 12px;
+      border-radius: 14px;
+      margin-bottom: 6px;
+      transition: background 0.2s;
+      font-size: 1.05rem;
+    }
+
+    .side-menu a:hover {
+      background: #f8fafc;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.2);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Hero */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 18px 0 20px;
+      gap: 16px;
+    }
+
+    /* Hero Slider Container */
+.hero-slider-wrapper {
+  width: 150px;
+  height: 150px;
+  border-radius: 28px;
+  box-shadow: 0 18px 28px -10px rgba(0,32,64,0.12);
+  overflow: hidden;
+  position: relative;
+  background: #f1f5f9;
+  flex-shrink: 0;
+}
+.hero-slider {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+  will-change: transform;
+}
+.hero-slide {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 28px;
+}
+/* Slider Dots */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  transition: background 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+.slider-dot.active-dot {
+  background: #0f2b4b;
+  transform: scale(1.3);
+}
+
+    .intro-text {
+      font-size: 0.98rem;
+      color: #334155;
+      text-align: center;
+      padding: 0 4px;
+    }
+
+    .short-text {
+      margin-bottom: 6px;
+    }
+
+    .full-text {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s, margin 0.3s;
+  margin-top: 0;
+}
+
+.full-text.expanded {
+  max-height: 180px;
+  opacity: 1;
+  margin-top: 12px;
+  overflow-y: auto;
+  padding-right: 6px;
+  padding-bottom: 16px;
+  /* Subtle scrollbar for mobile */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* Webkit scrollbar styling */
+.full-text.expanded::-webkit-scrollbar {
+  width: 4px;
+}
+.full-text.expanded::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+.full-text.expanded::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+    .read-more-btn {
+      background: none;
+      border: none;
+      color: #0f2b4b;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-top: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border-radius: 30px;
+      background: #f1f5f9;
+      transition: 0.2s;
+    }
+
+    /* Category cards */
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 650;
+      margin: 10px 0 12px;
+      color: #0b2a40;
+      letter-spacing: -0.2px;
+    }
+
+    .category-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .category-card {
+      flex: 1 1 calc(33.333% - 12px);
+      min-width: 95px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 14px 6px 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+
+    .category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 22px rgba(0,32,64,0.08);
+      background: #f9fafc;
+    }
+.category-card.active-card {
+  border: 2px solid #b9a089;
+  background: #fdfaf7;
+  box-shadow: 0 8px 22px rgba(139, 107, 78, 0.12);
+  transform: translateY(-2px);
+}
+    .cat-icon {
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+
+    .cat-name {
+      font-weight: 650;
+      font-size: 0.8rem;
+      color: #0f2b4b;
+      margin-bottom: 4px;
+    }
+
+    .cat-desc {
+      font-size: 0.7rem;
+      color: #64748b;
+      line-height: 1.3;
+    }
+
+    /* Expandable tools */
+    .tools-expand-area {
+      margin: 4px 0 12px;
+      background: #f8fafd;
+      border-radius: 22px;
+      padding: 0 14px;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.4s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.25s, padding 0.2s, margin 0.2s;
+      background: #f9fcff;
+      border: 1px solid #edf2f9;
+    }
+
+    .tools-expand-area.active {
+      max-height: 220px;
+      opacity: 1;
+      padding: 14px 14px;
+      margin: 8px 0 16px;
+    }
+
+    .tool-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .tool-pill {
+      background: #ffffff;
+      border: 1px solid #e9eef3;
+      padding: 10px 18px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: #1e293b;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.02);
+      transition: all 0.2s;
+      cursor: pointer;
+      background: #ffffff;
+      display: inline-block;
+    }
+
+    .tool-pill:hover {
+      background: #eef5ff;
+      border-color: #b9d0f0;
+      box-shadow: 0 8px 14px rgba(0,67,128,0.08);
+    }
+
+    /* Tutorial */
+    .tutorial {
+      margin: 12px 0 14px;
+      background: #f9fafc;
+      border-radius: 22px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .video-thumb {
+      position: relative;
+      background: #e2e8f0;
+      border-radius: 18px;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #d9e2ef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      transition: 0.2s;
+    }
+
+    .play-btn {
+      background: #ffffff;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #0f2b4b;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    .video-thumb:hover .play-btn {
+      background: #f0f4ff;
+      transform: scale(1.02);
+    }
+
+    .tutorial h3 {
+      margin-bottom: 10px;
+      font-weight: 650;
+      color: #1e293b;
+    }
+
+    /* Ad section */
+    .ad-container {
+      margin: 12px 0 14px;
+      border-radius: 18px;
+      overflow: hidden;
+      display: none; /* hidden by default */
+    }
+
+    .ad-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      border-radius: 18px;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: auto;
+      border-top: 1px solid #edf2f9;
+      padding: 18px 0 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      font-size: 0.8rem;
+      color: #475569;
+      text-align: center;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    .copyright {
+      width: 100%;
+      text-align: center;
+      margin-top: 8px;
+      color: #64748b;
+      font-size: 0.75rem;
+    }
+    /* Floating Share Button */
+.floating-share {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #0f2b4b;
+  color: white;
+  border: none;
+  box-shadow: 0 8px 22px rgba(0,32,64,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 50;
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+  touch-action: manipulation;
+}
+.floating-share:hover {
+  background: #1a3f5f;
+  transform: scale(1.05);
+  box-shadow: 0 12px 26px rgba(0,32,64,0.3);
+}
+.floating-share:active {
+  transform: scale(0.94);
+}
+.toast-message {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  background: #1e293b;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  z-index: 60;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none;
+}
+.toast-message.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+   /* Feedback Box */
+.feedback-section {
+  margin: 16px 0 10px;
+  background: #f9fafc;
+  border-radius: 20px;
+  padding: 16px 14px;
+  border: 1px solid #eef2f6;
+}
+.feedback-title {
+  font-weight: 650;
+  font-size: 0.95rem;
+  color: #1e293b;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.feedback-input {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: none;
+  background: #ffffff;
+  color: #1e293b;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.feedback-input:focus {
+  border-color: #b9a089;
+  box-shadow: 0 0 0 3px rgba(139, 107, 78, 0.08);
+}
+.feedback-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  gap: 10px;
+}
+.word-count {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+.send-feedback-btn {
+  background: #0f2b4b;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.send-feedback-btn:hover {
+  background: #1a3f5f;
+}
+.send-feedback-btn:active {
+  transform: scale(0.96);
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="logo" style="font-size:1.8rem; font-weight:700; margin:0;">Digitalkaro</h1>
+      <button class="hamburger" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <!-- Side Menu -->
+    <div class="overlay" id="overlay"></div>
+    <nav class="side-menu" id="sideMenu">
+      <button class="close-btn" id="closeMenuBtn">&times;</button>
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms & Conditions</a>
+      <a href="#">Other Pages</a>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+      <!--<div class="image-box">📱</div>-->
+    <!--  <div class="image-box" role="img" aria-label="Digital business tools illustration – mobile phone with tools">📱</div>
+     -->
+     <!-- Hero Tool Slider -->
+<div class="hero-slider-wrapper" id="heroSliderWrapper">
+  <div class="hero-slider" id="heroSlider">
+    <!-- SLIDE 1: Billing Tool -->
+    <div class="hero-slide" data-tool-url="tools/billing/" aria-label="Billing Tool">
+      <img src="https://placehold.co/300x300/e8f0fe/1e3b5a?text=Billing+Tool" alt="Billing Tool" loading="eager">
+    </div>
+    <!-- SLIDE 2: Ledger Tool -->
+    <div class="hero-slide" data-tool-url="tools/ledger/" aria-label="Ledger Tool">
+      <img src="https://placehold.co/300x300/f0fdf4/166534?text=Ledger+Tool" alt="Ledger Tool" loading="lazy">
+    </div>
+    <!-- SLIDE 3: Visiting Card Tool -->
+    <div class="hero-slide" data-tool-url="tools/visiting-card/" aria-label="Visiting Card Tool">
+      <img src="https://placehold.co/300x300/fef3c7/92400e?text=Visiting+Card" alt="Visiting Card Tool" loading="lazy">
+    </div>
+    <!-- SLIDE 4: Attendance Tool -->
+    <div class="hero-slide" data-tool-url="tools/attendance/" aria-label="Attendance Tool">
+      <img src="https://placehold.co/300x300/fce7f3/9d174d?text=Attendance" alt="Attendance Tool" loading="lazy">
+    </div>
+  </div>
+</div>
+<!-- Slider Dots -->
+<div class="slider-dots" id="sliderDots"></div>
+     <div class="intro-text">
+        <div class="short-text">
+          <strong>Apne business ko digital karein — wo bhi bilkul free!</strong>
+        </div>
+        <div class="full-text" id="fullIntro">
+          Ji haan, aapne sahi padha. Digitalkaro ek aisa platform hai jahan shopkeepers aur professionals apne daily work ko simple digital tools ki madad se manage kar sakte hain.<br><br>
+          Chahe aap ek shop owner ho, electrician, engineer, plumber, mistri, technician ya kisi aur profession mein ho — useful digital tools ek hi jagah paayein.
+        </div>
+        <button class="read-more-btn" id="readMoreBtn">Read More ↓</button>
+      </div>
+    </div>
+
+    <!-- Tools Categories -->
+    <div class="section-title">📋 Our Tools</div>
+    <div class="category-grid" id="categoryGrid">
+      <div class="category-card" data-category="billing">
+        <div class="cat-icon">🧾</div>
+        <div class="cat-name">Billing Tools</div>
+        <div class="cat-desc">Fast & simple</div>
+      </div>
+      <div class="category-card" data-category="ledger">
+        <div class="cat-icon">📒</div>
+        <div class="cat-name">Ledger & Account</div>
+        <div class="cat-desc">Track entries</div>
+      </div>
+      <div class="category-card" data-category="visiting">
+        <div class="cat-icon">💳</div>
+        <div class="cat-name">Visiting Card</div>
+        <div class="cat-desc">Digital card</div>
+      </div>
+      <div class="category-card" data-category="trip">
+        <div class="cat-icon">🗺️</div>
+        <div class="cat-name">Trip Timeline</div>
+        <div class="cat-desc">Record trips</div>
+      </div>
+      <div class="category-card" data-category="attendance">
+        <div class="cat-icon">✅</div>
+        <div class="cat-name">Attendance</div>
+        <div class="cat-desc">Mark present</div>
+      </div>
+    </div>
+
+    <!-- Expandable area -->
+    <div class="tools-expand-area" id="toolsExpandArea">
+      <div class="tool-pills" id="toolPillsContainer"></div>
+    </div>
+
+    <!-- Tutorial -->
+    <div class="tutorial">
+      <h3>📺 How to Use Our Tools</h3>
+      <div class="video-thumb" id="videoThumb">
+        <div class="play-btn">▶</div>
+      </div>
+      <div id="youtubePlayer" style="display: none; margin-top: 10px;"></div>
+    </div>
+
+    <!-- Advertisement -->
+    <div class="ad-container" id="adContainer">
+      <a href="#" id="adLink" target="_blank">
+        <img src="" alt="Advertisement" id="adImage">
+      </a>
+    </div>
+<!-- Feedback Box -->
+<div class="feedback-section">
+  <div class="feedback-title">💬 Ask a Question / Feedback</div>
+  <textarea class="feedback-input" id="feedbackText" rows="3" maxlength="600" placeholder="Apna question ya suggestion yahan likhein... (max 100 words)"></textarea>
+  <div class="feedback-row">
+    <span class="word-count" id="wordCount">0 / 100 words</span>
+    <button class="send-feedback-btn" id="sendFeedbackBtn">Send ✉️</button>
+  </div>
+</div>
+    <!-- Footer -->
+    <footer class="footer">
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Disclaimer</a>
+      <div class="copyright">© 2026 Digitalkaro · Light & Free</div>
+    </footer>
+    <!-- Floating Share Button -->
+<button class="floating-share" id="floatingShareBtn" aria-label="Share this page" title="Share">
+  <span>📤</span>
+</button>
+<div class="toast-message" id="toastMsg">Link copied!</div>
+  </div>
+
+  <script>
+    (function() {
+      // Menu toggle
+      const menuToggle = document.getElementById('menuToggle');
+      const sideMenu = document.getElementById('sideMenu');
+      const overlay = document.getElementById('overlay');
+      const closeBtn = document.getElementById('closeMenuBtn');
+
+      function openMenu() {
+        sideMenu.classList.add('open');
+        overlay.classList.add('show');
+      }
+      function closeMenu() {
+        sideMenu.classList.remove('open');
+        overlay.classList.remove('show');
+      }
+
+      menuToggle.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+      overlay.addEventListener('click', closeMenu);
+
+      // Read more / less
+      const readMoreBtn = document.getElementById('readMoreBtn');
+      const fullText = document.getElementById('fullIntro');
+      let expanded = false;
+
+      readMoreBtn.addEventListener('click', () => {
+  expanded = !expanded;
+  if (expanded) {
+    fullText.classList.add('expanded');
+    readMoreBtn.innerHTML = 'Show Less ↑';
+  } else {
+    fullText.classList.remove('expanded');
+    readMoreBtn.innerHTML = 'Read More ↓';
+  }
+});
+
+      // Tools data
+      const toolsData = {
+        billing: ['Fast Billing', 'Simple Bill', 'Barcode Billing', 'Print Bill'],
+        ledger: ['Daily Ledger', 'Income/Expense', 'Balance Sheet'],
+        visiting: ['Create Card', 'Share Card', 'My Cards'],
+        trip: ['New Trip', 'Timeline View', 'Export Log'],
+        attendance: ['Mark Present', 'History', 'Staff List']
+      };
+
+      const categoryCards = document.querySelectorAll('.category-card');
+      const toolsExpandArea = document.getElementById('toolsExpandArea');
+      const toolPillsContainer = document.getElementById('toolPillsContainer');
+    /*  let activeCategory = null;
+
+      function renderTools(category) {
+        const tools = toolsData[category] || [];
+        toolPillsContainer.innerHTML = '';
+        tools.forEach(tool => {
+          const pill = document.createElement('span');
+          pill.className = 'tool-pill';
+          pill.textContent = tool;
+          pill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Redirect simulation (replace with actual link)
+            alert(`Opening: ${tool} (category: ${category})`);
+            // window.location.href = 'tool-page.html'; 
+          });
+          toolPillsContainer.appendChild(pill);
+        });
+      }
+
+      function closeExpandArea() {
+        toolsExpandArea.classList.remove('active');
+        activeCategory = null;
+      }
+
+      function openCategory(category, cardElement) {
+        if (activeCategory === category) {
+          closeExpandArea();
+          return;
+        }
+        // Close previous if any
+        if (activeCategory) {
+          closeExpandArea();
+        }
+        // Open new
+        renderTools(category);
+        toolsExpandArea.classList.add('active');
+        activeCategory = category;
+      }
+
+      categoryCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          const category = card.dataset.category;
+          if (category) {
+            openCategory(category, card);
+          }
+        });
+      });
+
+      // Close expand area if click outside? (optional, keep compact)
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('.category-card') && !event.target.closest('#toolsExpandArea')) {
+          if (toolsExpandArea.classList.contains('active')) {
+            closeExpandArea();
+          }
+        }
+      });
+*/
+     let activeCategory = null;
+let activeCardElement = null;
+
+function renderTools(category) {
+  const tools = toolsData[category] || [];
+  toolPillsContainer.innerHTML = '';
+  tools.forEach(tool => {
+    const pill = document.createElement('span');
+    pill.className = 'tool-pill';
+    pill.textContent = tool;
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      alert(`Opening: ${tool} (category: ${category})`);
+    });
+    toolPillsContainer.appendChild(pill);
+  });
+}
+
+function closeExpandArea() {
+  toolsExpandArea.classList.remove('active');
+  // Remove highlight from active card
+  if (activeCardElement) {
+    activeCardElement.classList.remove('active-card');
+    activeCardElement = null;
+  }
+  activeCategory = null;
+}
+
+function openCategory(category, cardElement) {
+  if (activeCategory === category) {
+    // Same card clicked again — close it
+    closeExpandArea();
+    return;
+  }
+  // Close previous if any
+  closeExpandArea();
+  
+  // Open new
+  renderTools(category);
+  toolsExpandArea.classList.add('active');
+  activeCategory = category;
+  
+  // Highlight the clicked card
+  cardElement.classList.add('active-card');
+  activeCardElement = cardElement;
+  
+  // Smooth scroll the expanded tools area into view
+  setTimeout(() => {
+    toolsExpandArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 100);
+}
+
+categoryCards.forEach(card => {
+  card.addEventListener('click', (e) => {
+    const category = card.dataset.category;
+    if (category) {
+      openCategory(category, card);
+    }
+  });
+});
+
+// Close expand area if clicking completely outside category cards and tools area
+document.addEventListener('click', function(event) {
+  if (!event.target.closest('.category-card') && !event.target.closest('#toolsExpandArea')) {
+    if (toolsExpandArea.classList.contains('active')) {
+      closeExpandArea();
+    }
+  }
+});
+      // Tutorial video lazy load
+      const videoThumb = document.getElementById('videoThumb');
+      const youtubePlayerDiv = document.getElementById('youtubePlayer');
+      let videoLoaded = false;
+
+      videoThumb.addEventListener('click', () => {
+        if (videoLoaded) return;
+        videoLoaded = true;
+        // Replace with actual YouTube thumbnail/iframe; using lightweight placeholder
+        youtubePlayerDiv.style.display = 'block';
+        youtubePlayerDiv.innerHTML = `
+          <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+            title="Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+            encrypted-media; gyroscope; picture-in-picture" allowfullscreen 
+            style="border-radius: 16px; max-width:100%;"></iframe>`;
+        videoThumb.style.display = 'none';
+      });
+
+      // Advertisement logic: easily replace image
+      function setAdvertisement(imageUrl, linkUrl = '#') {
+        const adContainer = document.getElementById('adContainer');
+        const adImage = document.getElementById('adImage');
+        const adLink = document.getElementById('adLink');
+        
+        if (!imageUrl || imageUrl.trim() === '') {
+          adContainer.style.display = 'none';
+          return;
+        }
+        adImage.src = imageUrl;
+        adImage.alt = 'Advertisement';
+        adLink.href = linkUrl || '#';
+        adContainer.style.display = 'block';
+      }
+
+      // Example: set to empty (hide), or provide a PNG/JPG.
+      // Change the line below to show an ad: setAdvertisement('your-image.png', 'https://example.com');
+    /*  setAdvertisement('', '');  */// Currently hidden. Replace with actual image path.
+// 👇 DEMO ADVERTISEMENT — Replace with actual advertiser image and link
+setAdvertisement(
+  'https://placehold.co/400x120/1e293b/f8fafc?text=Your+Advertisement+Here&font=raleway',
+  'https://example.com/advertiser-landing-page'
+);
+      // For demo: if you want to test, uncomment next line with a placeholder.
+      // setAdvertisement('https://placehold.co/400x120/e2e8f0/1e293b?text=Your+Ad+Here', '#');
+      // Floating share button
+const shareBtn = document.getElementById('floatingShareBtn');
+const toastMsg = document.getElementById('toastMsg');
+
+shareBtn.addEventListener('click', async () => {
+  const shareData = {
+    title: 'Digitalkaro – Free Digital Business Tools',
+    text: 'Apne business ke liye free digital tools: billing, ledger, visiting card, attendance aur trip recorder. Try karein!',
+    url: window.location.href
+  };
+  
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+    } catch (err) {
+      // User cancelled or error
+    }
+  } else {
+    // Fallback: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toastMsg.classList.add('show');
+      setTimeout(() => {
+        toastMsg.classList.remove('show');
+      }, 1800);
+    } catch (err) {
+      // Clipboard failed
+      toastMsg.textContent = 'Could not copy link';
+      toastMsg.classList.add('show');
+      setTimeout(() => {
+        toastMsg.classList.remove('show');
+        toastMsg.textContent = 'Link copied!';
+      }, 1800);
+    }
+  }
+});
+     // Feedback box logic
+const feedbackText = document.getElementById('feedbackText');
+const wordCount = document.getElementById('wordCount');
+const sendFeedbackBtn = document.getElementById('sendFeedbackBtn');
+
+feedbackText.addEventListener('input', () => {
+  const text = feedbackText.value.trim();
+  const words = text.length > 0 ? text.split(/\s+/) : [];
+  const count = words.length;
+  wordCount.textContent = `${count} / 100 words`;
+  
+  if (count > 100) {
+    wordCount.style.color = '#dc2626';
+  } else {
+    wordCount.style.color = '#94a3b8';
+  }
+});
+
+sendFeedbackBtn.addEventListener('click', () => {
+  const text = feedbackText.value.trim();
+  if (text.length === 0) {
+    alert('Please write your feedback or question.');
+    return;
+  }
+  const words = text.split(/\s+/);
+  if (words.length > 100) {
+    alert('Please limit your message to 100 words.');
+    return;
+  }
+  // Open email client with feedback
+  const subject = encodeURIComponent('Digitalkaro – Feedback / Question');
+  const body = encodeURIComponent(text);
+  window.location.href = `mailto:feedback@digitalkaro.com?subject=${subject}&body=${body}`;
+});
+     // Hero Slider Logic
+const heroSlider = document.getElementById('heroSlider');
+const slides = document.querySelectorAll('.hero-slide');
+const dotsContainer = document.getElementById('sliderDots');
+const totalSlides = slides.length;
+let currentSlide = 0;
+let autoPlayInterval;
+let isPaused = false;
+
+// Create dots
+for (let i = 0; i < totalSlides; i++) {
+  const dot = document.createElement('span');
+  dot.className = 'slider-dot' + (i === 0 ? ' active-dot' : '');
+  dot.dataset.index = i;
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+}
+const allDots = document.querySelectorAll('.slider-dot');
+
+function updateSlider() {
+  heroSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+  allDots.forEach((dot, idx) => {
+    dot.classList.toggle('active-dot', idx === currentSlide);
+  });
+}
+
+function goToSlide(index) {
+  currentSlide = index;
+  updateSlider();
+  resetAutoPlay();
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % totalSlides;
+  updateSlider();
+}
+
+function resetAutoPlay() {
+  clearInterval(autoPlayInterval);
+  if (!isPaused) {
+    autoPlayInterval = setInterval(nextSlide, 3000);
+  }
+}
+
+function startAutoPlay() {
+  isPaused = false;
+  resetAutoPlay();
+}
+
+function pauseAutoPlay() {
+  isPaused = true;
+  clearInterval(autoPlayInterval);
+}
+
+// Touch / interaction pause
+const sliderWrapper = document.getElementById('heroSliderWrapper');
+sliderWrapper.addEventListener('mouseenter', pauseAutoPlay);
+sliderWrapper.addEventListener('mouseleave', startAutoPlay);
+sliderWrapper.addEventListener('touchstart', pauseAutoPlay, { passive: true });
+sliderWrapper.addEventListener('touchend', () => {
+  setTimeout(startAutoPlay, 2000);
+});
+
+// Slide click navigation
+slides.forEach(slide => {
+  slide.addEventListener('click', () => {
+    const url = slide.dataset.toolUrl;
+    if (url) {
+      window.location.href = url;
+    }
+  });
+});
+
+// Start autoplay
+startAutoPlay();
+    })();
+  </script>
+</body>
+</html>
