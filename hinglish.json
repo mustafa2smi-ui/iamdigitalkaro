@@ -1,0 +1,204 @@
+{
+  "site_name": "Digitalkaro",
+  "hero_short_text": "Apne business ko digital karein — wo bhi bilkul free!",
+  "hero_full_text": "Ji haan, aapne sahi padha. Digitalkaro ek aisa platform hai jahan shopkeepers aur professionals apne daily work ko simple digital tools ki madad se manage kar sakte hain. Chahe aap shop owner ho, electrician, engineer, plumber, mistri, technician ya kisi aur profession mein ho — useful digital tools ek hi jagah paayein.",
+  "read_more": "Read More ↓",
+  "show_less": "Show Less ↑",
+  "our_tools_title": "📋 Our Tools",
+  "billing_category": "Billing Tools",
+  "billing_desc": "Fast & simple",
+  "ledger_category": "Ledger & Account",
+  "ledger_desc": "Track entries",
+  "visiting_category": "Visiting Card",
+  "visiting_desc": "Digital card",
+  "trip_category": "Trip Timeline",
+  "trip_desc": "Record trips",
+  "attendance_category": "Attendance",
+  "attendance_desc": "Mark present",
+  "start_now": "Start Now →",
+  "tutorial_title": "📺 How to Use Our Tools",
+  "feedback_title": "💬 Question Puchhein / Feedback Dein",
+  "feedback_placeholder": "Apna question ya suggestion yahan likhein... (max 100 words)",
+  "send": "Bhejein ✉️",
+  "share_button": "Share",
+  "link_copied": "Link copied!",
+  "footer_about": "About Us",
+  "footer_contact": "Contact",
+  "footer_privacy": "Privacy",
+  "footer_terms": "Terms",
+  "footer_disclaimer": "Disclaimer",
+  "copyright": "© 2026 Digitalkaro · Light & Free",
+  
+  "tools": {
+    "billing": {
+      "fast_billing": {
+        "name": "Fast Billing",
+        "description": "Apne customers ke liye bina delay ke quick bills banayein.",
+        "features": [
+          "Quick bill creation",
+          "Easy item aur quantity entry",
+          "Mobile-friendly interface",
+          "Bill print ya share karein"
+        ]
+      },
+      "simple_bill": {
+        "name": "Simple Bill",
+        "description": "Essential details ke saath clean aur simple bills banayein.",
+        "features": [
+          "Minimal bill format",
+          "Customer name aur date",
+          "Amount ke saath item list",
+          "Image ke roop mein download"
+        ]
+      },
+      "barcode_billing": {
+        "name": "Barcode Billing",
+        "description": "Product tracking ke liye barcode support ke saath bills banayein.",
+        "features": [
+          "Barcode generation",
+          "Product code entry",
+          "Quick product lookup",
+          "Printable barcode labels"
+        ]
+      },
+      "print_bill": {
+        "name": "Print Bill",
+        "description": "Printing ya sharing ke liye ready professional bills banayein.",
+        "features": [
+          "Professional bill layout",
+          "Print-friendly design",
+          "Custom business name",
+          "PDF ke roop mein save"
+        ]
+      }
+    },
+    "ledger": {
+      "daily_ledger": {
+        "name": "Daily Ledger",
+        "description": "Apne daily income aur expense ka record easily maintain karein.",
+        "features": [
+          "Daily entry tracking",
+          "Income aur expense categories",
+          "Running balance view",
+          "Date-wise filtering"
+        ]
+      },
+      "income_expense": {
+        "name": "Income/Expense",
+        "description": "Apni kamai aur kharchon ko alag-alag track karein.",
+        "features": [
+          "Separate income/expense entries",
+          "Monthly summary",
+          "Category management",
+          "Export data option"
+        ]
+      },
+      "balance_sheet": {
+        "name": "Balance Sheet",
+        "description": "Apni complete financial position ek nazar mein dekhein.",
+        "features": [
+          "Assets aur liabilities",
+          "Net balance calculation",
+          "Printable report",
+          "Simple financial overview"
+        ]
+      }
+    },
+    "visiting": {
+      "create_card": {
+        "name": "Create Card",
+        "description": "Turant professional digital visiting cards design karein.",
+        "features": [
+          "Name aur business details",
+          "Contact information",
+          "Simple card templates",
+          "Card image download"
+        ]
+      },
+      "share_card": {
+        "name": "Share Card",
+        "description": "Apna digital visiting card kisi ke saath bhi easily share karein.",
+        "features": [
+          "One-tap sharing",
+          "WhatsApp sharing support",
+          "QR code generation",
+          "Link sharing option"
+        ]
+      },
+      "my_cards": {
+        "name": "My Cards",
+        "description": "Apne saare visiting cards ek hi jagah save aur manage karein.",
+        "features": [
+          "Card list view",
+          "Saved cards edit karein",
+          "Unwanted cards delete karein",
+          "Local card storage"
+        ]
+      }
+    },
+    "trip": {
+      "new_trip": {
+        "name": "New Trip",
+        "description": "Apni work-related trips ko start aur end details ke saath record karein.",
+        "features": [
+          "Trip start aur end time",
+          "Location notes",
+          "Distance tracking",
+          "Trip ka purpose"
+        ]
+      },
+      "timeline_view": {
+        "name": "Timeline View",
+        "description": "Apni saari recorded trips ko chronological order mein dekhein.",
+        "features": [
+          "Date-wise trip list",
+          "Trip duration display",
+          "Search aur filter",
+          "Simple timeline layout"
+        ]
+      },
+      "export_log": {
+        "name": "Export Log",
+        "description": "Backup ya sharing ke liye apne trip records download karein.",
+        "features": [
+          "Text file ke roop mein export",
+          "Clipboard par copy",
+          "Trip list print karein",
+          "Apne records ka backup"
+        ]
+      }
+    },
+    "attendance": {
+      "mark_present": {
+        "name": "Mark Present",
+        "description": "Apne ya apne staff ke liye quickly attendance mark karein.",
+        "features": [
+          "One-tap present marking",
+          "Date aur time stamp",
+          "Multiple staff names",
+          "Daily attendance record"
+        ]
+      },
+      "history": {
+        "name": "History",
+        "description": "Kabhi bhi past attendance records dekhein.",
+        "features": [
+          "Date-wise attendance view",
+          "Monthly summary",
+          "Staff-wise filtering",
+          "Attendance data export"
+        ]
+      },
+      "staff_list": {
+        "name": "Staff List",
+        "description": "Attendance ke liye apne staff ya worker list manage karein.",
+        "features": [
+          "Staff names add karein",
+          "Staff details edit karein",
+          "Staff members remove karein",
+          "Quick attendance view"
+        ]
+      }
+    }
+  }
+}
