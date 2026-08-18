@@ -34,7 +34,8 @@
 "notify_me": "Notify Me",
   "diary_category": "Personal Diary",
 "diary_desc": "Your daily companion",
-  
+"Livewebsite_category":"Live Website",
+  "Livewebsite_desc":"Publish Your Professional",
   "tools": {
     "billing": {
       "fast_billing": {
@@ -217,7 +218,17 @@
         "Add personal photos",
         "Personal notes and diary entries"
       ]
-    }
+    },
+        "LiveWebsite": {
+    "personal_diary": {
+      "name": "Live Website",
+      "description": "Keep your personal notes, records, and memories safe in one place.",
+      "features": [
+        "Password protection",
+        "Attendance tracking",
+        "Milk/expense record keeping",
+        "Add personal photos",
+        "Personal notes and diary entries"
     }
   }
 }
