@@ -915,6 +915,11 @@
           <div class="cat-name" data-i18n="attendance_category">Attendance</div>
           <div class="cat-desc" data-i18n="attendance_desc">Mark present</div>
         </div>
+    <div class="category-card" data-category="LiveWebsite">
+  <div class="cat-icon">🌐</div>
+  <div class="cat-name" data-i18n="livewebsite">Live Website</div>
+  <div class="cat-desc" data-i18n="livewebsite_desc">Publish Your Professional</div>
+    </div>
         <!-- Direct tool without sub-tools (no expansion) -->
 <div class="category-card" data-category="diary">
   <div class="cat-icon">📔</div>
@@ -1112,35 +1117,41 @@
       // ============ TOOL CARDS DATA ============
       const toolsData = {
   billing: [
-    { key: 'fast_billing', url: 'tools/fast-billing.html', status: 'active' },
-    { key: 'simple_bill', url: 'tools/simple-bill.html', status: 'active' },
+    { key: 'fast_billing', url: 'Toolnotebookbiil.html', status: 'active' },
+    { key: 'simple_bill', url: 'tools/simple-bill.html', status: 'coming-soon' },
     { key: 'barcode_billing', url: 'tools/barcode-billing.html', status: 'coming-soon' },
     { key: 'print_bill', url: 'tools/print-bill.html', status: 'development' }
   ],
   ledger: [
-    { key: 'daily_ledger', url: 'tools/daily-ledger.html', status: 'active' },
-    { key: 'income_expense', url: 'tools/income-expense.html', status: 'coming-soon' },
-    { key: 'balance_sheet', url: 'tools/balance-sheet.html', status: 'development' }
+    { key: 'daily_ledger', url: 'Toolledgerrecord.html', status: 'active' }
+   /* { key: 'income_expense', url: 'tools/income-expense.html', status: 'coming-soon' },
+    { key: 'balance_sheet', url: 'tools/balance-sheet.html', status: 'development' }*/
   ],
   visiting: [
-    { key: 'create_card', url: 'tools/create-card.html', status: 'active' },
-    { key: 'share_card', url: 'tools/share-card.html', status: 'coming-soon' },
-    { key: 'my_cards', url: 'tools/my-cards.html', status: 'active' }
+    { key: 'create_card', url: 'Toolvisitingcard.html', status: 'active' }
+   /* { key: 'share_card', url: 'tools/share-card.html', status: 'coming-soon' },
+    { key: 'my_cards', url: 'tools/my-cards.html', status: 'active' }*/
   ],
   trip: [
-    { key: 'new_trip', url: 'tools/new-trip.html', status: 'development' },
-    { key: 'timeline_view', url: 'tools/timeline-view.html', status: 'coming-soon' },
-    { key: 'export_log', url: 'tools/export-log.html', status: 'active' }
+    { key: 'new_trip', url: 'ToolTraveltimeline.html', status: 'active' }
+   /* { key: 'timeline_view', url: 'tools/timeline-view.html', status: 'coming-soon' },
+    { key: 'export_log', url: 'tools/export-log.html', status: 'active' }*/
   ],
   attendance: [
     { key: 'mark_present', url: 'tools/mark-present.html', status: 'active' },
     { key: 'history', url: 'tools/history.html', status: 'coming-soon' },
     { key: 'staff_list', url: 'tools/staff-list.html', status: 'active' }
   ],
-        
+                
+  LiveWebsite: [
+    { 
+      key: 'livewebsite', url: 'Toollivewebsite.html',  status: 'active' 
+       // or 'coming-soon' or 'development'
+    }
+    ],
   diary: [
     { 
-      key: 'personal_diary', url: 'tools/personal-diary.html',  status: 'active' 
+      key: 'personal_diary', url: 'Tooldairy.html',  status: 'active' 
        // or 'coming-soon' or 'development'
     }
   ]
