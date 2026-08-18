@@ -220,7 +220,7 @@
       ]
     },
         "LiveWebsite": {
-    "personal_diary": {
+    "Live Website": {
       "name": "Live Website",
       "description": "Keep your personal notes, records, and memories safe in one place.",
       "features": [
@@ -229,6 +229,7 @@
         "Milk/expense record keeping",
         "Add personal photos",
         "Personal notes and diary entries"
+      ]
     }
   }
 }
