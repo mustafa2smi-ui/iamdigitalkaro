@@ -1,0 +1,223 @@
+{
+  "site_name": "Digitalkaro",
+  "hero_short_text": "Take your business digital — completely free!",
+  "hero_full_text": "Yes, you read that right. Digitalkaro is a platform where shopkeepers and professionals can manage their daily work with simple digital tools. Whether you are a shop owner, electrician, engineer, plumber, technician, or any other professional — find useful digital tools in one place.",
+  "read_more": "Read More ↓",
+  "show_less": "Show Less ↑",
+  "our_tools_title": "📋 Our Tools",
+  "billing_category": "Billing Tools",
+  "billing_desc": "Fast & simple",
+  "ledger_category": "Ledger & Account",
+  "ledger_desc": "Track entries",
+  "visiting_category": "Visiting Card",
+  "visiting_desc": "Digital card",
+  "trip_category": "Trip Timeline",
+  "trip_desc": "Record trips",
+  "attendance_category": "Attendance",
+  "attendance_desc": "Mark present",
+  "start_now": "Start Now →",
+  "tutorial_title": "📺 How to Use Our Tools",
+  "feedback_title": "💬 Ask a Question / Feedback",
+  "feedback_placeholder": "Write your question or suggestion here... (max 100 words)",
+  "send": "Send ✉️",
+  "share_button": "Share",
+  "link_copied": "Link copied!",
+  "footer_about": "About Us",
+  "footer_contact": "Contact",
+  "footer_privacy": "Privacy",
+  "footer_terms": "Terms",
+  "footer_disclaimer": "Disclaimer",
+  "copyright": "© 2026 Digitalkaro · Light & Free",
+  "coming_soon": "Coming Soon",
+"under_development": "Under Development",
+"tool_not_available": "This tool is not available yet.",
+"notify_me": "Notify Me",
+  "diary_category": "Personal Diary",
+"diary_desc": "Your daily companion",
+  
+  "tools": {
+    "billing": {
+      "fast_billing": {
+        "name": "Fast Billing",
+        "description": "Create quick bills for your customers without any delay.",
+        "features": [
+          "Quick bill creation",
+          "Easy item and quantity entry",
+          "Mobile-friendly interface",
+          "Print or share bill instantly"
+        ]
+      },
+      "simple_bill": {
+        "name": "Simple Bill",
+        "description": "Make clean and simple bills with essential details only.",
+        "features": [
+          "Minimal bill format",
+          "Customer name and date",
+          "Item list with amount",
+          "Download as image"
+        ]
+      },
+      "barcode_billing": {
+        "name": "Barcode Billing",
+        "description": "Generate bills with barcode support for product tracking.",
+        "features": [
+          "Barcode generation",
+          "Product code entry",
+          "Quick product lookup",
+          "Printable barcode labels"
+        ]
+      },
+      "print_bill": {
+        "name": "Print Bill",
+        "description": "Create professional bills ready for printing or sharing.",
+        "features": [
+          "Professional bill layout",
+          "Print-friendly design",
+          "Custom business name",
+          "Save as PDF option"
+        ]
+      }
+    },
+    "ledger": {
+      "daily_ledger": {
+        "name": "Daily Ledger",
+        "description": "Maintain your daily income and expense records easily.",
+        "features": [
+          "Daily entry tracking",
+          "Income and expense categories",
+          "Running balance view",
+          "Date-wise filtering"
+        ]
+      },
+      "income_expense": {
+        "name": "Income/Expense",
+        "description": "Track your earnings and spendings separately.",
+        "features": [
+          "Separate income/expense entries",
+          "Monthly summary",
+          "Category management",
+          "Export data option"
+        ]
+      },
+      "balance_sheet": {
+        "name": "Balance Sheet",
+        "description": "View your complete financial position at a glance.",
+        "features": [
+          "Assets and liabilities",
+          "Net balance calculation",
+          "Printable report",
+          "Simple financial overview"
+        ]
+      }
+    },
+    "visiting": {
+      "create_card": {
+        "name": "Create Card",
+        "description": "Design professional digital visiting cards instantly.",
+        "features": [
+          "Name and business details",
+          "Contact information",
+          "Simple card templates",
+          "Download card image"
+        ]
+      },
+      "share_card": {
+        "name": "Share Card",
+        "description": "Share your digital visiting card with anyone easily.",
+        "features": [
+          "One-tap sharing",
+          "WhatsApp sharing support",
+          "QR code generation",
+          "Link sharing option"
+        ]
+      },
+      "my_cards": {
+        "name": "My Cards",
+        "description": "Save and manage all your visiting cards in one place.",
+        "features": [
+          "Card list view",
+          "Edit saved cards",
+          "Delete unwanted cards",
+          "Local card storage"
+        ]
+      }
+    },
+    "trip": {
+      "new_trip": {
+        "name": "New Trip",
+        "description": "Record your work-related trips with start and end details.",
+        "features": [
+          "Trip start and end time",
+          "Location notes",
+          "Distance tracking",
+          "Purpose of trip"
+        ]
+      },
+      "timeline_view": {
+        "name": "Timeline View",
+        "description": "See all your recorded trips in chronological order.",
+        "features": [
+          "Date-wise trip list",
+          "Trip duration display",
+          "Search and filter",
+          "Simple timeline layout"
+        ]
+      },
+      "export_log": {
+        "name": "Export Log",
+        "description": "Download your trip records for backup or sharing.",
+        "features": [
+          "Export as text file",
+          "Copy to clipboard",
+          "Print trip list",
+          "Backup your records"
+        ]
+      }
+    },
+    "attendance": {
+      "mark_present": {
+        "name": "Mark Present",
+        "description": "Quickly mark attendance for yourself or your staff.",
+        "features": [
+          "One-tap present marking",
+          "Date and time stamp",
+          "Multiple staff names",
+          "Daily attendance record"
+        ]
+      },
+      "history": {
+        "name": "History",
+        "description": "View past attendance records at any time.",
+        "features": [
+          "Date-wise attendance view",
+          "Monthly summary",
+          "Staff-wise filtering",
+          "Export attendance data"
+        ]
+      },
+      "staff_list": {
+        "name": "Staff List",
+        "description": "Manage your staff or worker list for attendance.",
+        "features": [
+          "Add staff names",
+          "Edit staff details",
+          "Remove staff members",
+          "Quick attendance view"
+        ]
+      }
+      },
+      "diary": {
+    "personal_diary": {
+      "name": "Personal Diary",
+      "description": "Keep your personal notes, records, and memories safe in one place.",
+      "features": [
+        "Password protection",
+        "Attendance tracking",
+        "Milk/expense record keeping",
+        "Add personal photos",
+        "Personal notes and diary entries"
+      ]
+    }
+    }
+  }
+}
