@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Digital Paper Diary</title>
+    
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="data:application/manifest+json,{
+        %22name%22:%22My%20Digital%20Paper%20Diary%22,
+        %22short_name%22:%22PaperDiary%22,
+        %22start_url%22:%22./index.html%22,
+        %22display%22:%22standalone%22,
+        %22background_color%22:%22%232c3e50%22,
+        %22theme_color%22:%22%232c3e50%22,
+        %22icons%22:[{%22src%22:%22https://cdn-icons-png.flaticon.com/512/3472/3472620.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22}]
+    }">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Canvas & jsPDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        :root {
+            --header-bg: #2c3e50;
+            --header-text: #ffffff;
+            --paper-bg: #fdfbf7;
+            --line-color: #e3d9c6;
+            --border-color: #d1c7b7;
+            --text-color: #2b2b2b;
+            --body-bg: #eef2f5;
+            --drawer-bg: #1a252f;
+            --ink-color: #1a252f;
+        }
+
+        body.dark-mode {
+            --header-bg: #111a22;
+            --paper-bg: #222b35;
+            --line-color: #344454;
+            --border-color: #3a4b5c;
+            --text-color: #e0e0e0;
+            --body-bg: #12181f;
+            --ink-color: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background-color: var(--body-bg); color: var(--text-color);
+            display: flex; flex-direction: column; min-height: 100vh;
+            padding-top: 55px; padding-bottom: 60px; transition: background-color 0.3s;
+        }
+
+        /* 🌟 WELCOME ANIMATED OVERLAY */
+        .welcome-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #2c3e50 100%);
+            z-index: 9999; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            color: white; padding: 20px; transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .welcome-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 30px 22px; border-radius: 20px; max-width: 360px; width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); animation: floatCard 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatCard {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-10px); }
+        }
+
+        .welcome-icon { font-size: 3.8rem; color: #f1c40f; margin-bottom: 15px; }
+        .welcome-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+        .welcome-desc { font-size: 0.8rem; color: #e0e0e0; margin-bottom: 20px; line-height: 1.4; }
+
+        .continue-btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white; border: none; padding: 12px 28px; border-radius: 30px;
+            font-size: 0.9rem; font-weight: 600; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4); transition: transform 0.2s;
+        }
+        .continue-btn:active { transform: scale(0.95); }
+
+        /* 🔒 SUBSCRIPTION / EXPIRED OVERLAY */
+        .expiry-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(18, 24, 31, 0.96); z-index: 10000; display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            color: white; text-align: center; padding: 20px;
+        }
+
+        .expiry-card {
+            background: #2c3e50; border: 1.5px solid #e74c3c;
+            padding: 25px; border-radius: 16px; max-width: 340px; width: 100%;
+        }
+
+        /* Header Bar */
+        .header-bar {
+            position: fixed; top: 0; left: 0; right: 0; height: 55px;
+            background-color: var(--header-bg); color: var(--header-text);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 1000;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .hamburger-menu { font-size: 1.3rem; cursor: pointer; color: #f1c40f; }
+
+        .user-name-card {
+            background-color: #ffffff; color: #d63031; padding: 3px 10px;
+            border-radius: 8px; font-weight: 700; font-size: 0.78rem; max-width: 210px;
+            text-align: center; line-height: 1.2; word-wrap: break-word;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25); border: 1.5px solid #ff7675;
+            cursor: pointer; user-select: none;
+        }
+
+        /* Drawer Menu */
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; z-index: 1100;
+        }
+
+        .drawer-menu {
+            position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
+            background-color: var(--drawer-bg); color: #ffffff; z-index: 1200;
+            transition: left 0.3s ease; display: flex; flex-direction: column; overflow-y: auto;
+        }
+
+        .drawer-menu.open { left: 0; }
+
+        .drawer-header {
+            padding: 20px 15px; background: rgba(0,0,0,0.2);
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .drawer-header h3 { color: #f1c40f; }
+        .close-drawer-btn { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; }
+        .drawer-content { padding: 10px 0; }
+        .drawer-link {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 20px; color: #ecf0f1; text-decoration: none; font-size: 0.88rem;
+            cursor: pointer; border: none; background: transparent; width: 100%; text-align: left;
+        }
+
+        .drawer-link:hover { background: rgba(255,255,255,0.08); color: #f1c40f; }
+
+        /* Workspace Container */
+        .diary-container {
+            width: 100%; max-width: 980px; margin: 8px auto; padding: 0 10px;
+            flex: 1; display: flex; flex-direction: column;
+        }
+
+        /* Top Bar */
+        .top-attached-bar {
+            background-color: #34495e; color: white; display: flex;
+            align-items: center; justify-content: space-between; padding: 6px 10px;
+            border-bottom: 2px solid var(--border-color); width: 100%;
+        }
+
+        .attached-group {
+            display: flex; align-items: center; background: rgba(0, 0, 0, 0.25);
+            border-radius: 6px; padding: 2px; border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .attached-select {
+            background: transparent; color: #f1c40f; border: none; outline: none;
+            font-size: 0.75rem; font-weight: 600; padding: 3px 4px; height: 26px;
+            cursor: pointer; border-right: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .attached-select option { background-color: #2c3e50; color: #fff; }
+
+        .attached-stamp-btn {
+            background: linear-gradient(145deg, #7f8c8d, #2c3e50); color: #ffffff;
+            border: none; padding: 3px 8px; font-size: 0.7rem; font-weight: 600;
+            border-radius: 0 4px 4px 0; height: 26px; cursor: pointer; display: flex; align-items: center; gap: 4px;
+        }
+
+        .attached-stamp-btn:hover { background: #e67e22; }
+
+        .save-status-badge {
+            font-size: 0.68rem; font-weight: 600; padding: 3px 8px;
+            border-radius: 10px; background: rgba(255,255,255,0.15); color: #2ecc71;
+        }
+
+        /* Dedicated Tools Strip */
+        .tools-dedicated-row {
+            background-color: #2c3e50; padding: 6px 10px; display: flex;
+            align-items: center; gap: 6px; overflow-x: auto; scrollbar-width: thin;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tools-dedicated-row::-webkit-scrollbar { height: 3px; }
+        .tools-dedicated-row::-webkit-scrollbar-thumb { background: #f1c40f; border-radius: 3px; }
+
+        .map-btn {
+            height: 30px; padding: 0 10px; border-radius: 15px;
+            border: 1.5px solid rgba(255,255,255,0.6); font-weight: 600; font-size: 0.75rem;
+            cursor: pointer; display: flex; align-items: center; gap: 4px; justify-content: center;
+            flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.3); transition: transform 0.15s; color: white;
+        }
+
+        .map-btn:disabled { opacity: 0.4; cursor: not-allowed; filter: grayscale(1); }
+        .map-btn:active:not(:disabled) { transform: scale(0.92); }
+
+        .btn-m   { background-color: #e74c3c; }
+        .btn-a   { background-color: #2ecc71; }
+        .btn-p   { background-color: #3498db; }
+        .btn-c1  { background-color: #9b59b6; }
+        .btn-t1  { background-color: #f39c12; }
+        .btn-c2  { background-color: #1abc9c; }
+        .btn-o   { background-color: #e67e22; }
+        .btn-cn  { background-color: #34495e; border: 1px solid #fff; }
+        .btn-t2  { background-color: #d35400; }
+        .btn-r   { background-color: #c0392b; }
+        .btn-flt { background-color: #16a085; }
+        .btn-udh { background-color: #c0392b; }
+        .btn-med { background-color: #8e44ad; }
+        .btn-wrk { background-color: #2980b9; }
+
+        /* Workspace */
+        .diary-workspace {
+            display: flex; background-color: var(--paper-bg);
+            border: 2.5px solid var(--border-color); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12); position: relative;
+        }
+
+        /* Left Date Strip */
+        .dates-strip-left {
+            width: 55px; background-color: rgba(0,0,0,0.03);
+            border-right: 2px solid var(--border-color); display: flex; flex-direction: column;
+        }
+
+        .date-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 22px; border-bottom: 1px solid var(--border-color); cursor: pointer; font-size: 0.65rem; position: relative;
+        }
+
+        .date-item.active { background-color: var(--header-bg); color: white; font-weight: bold; }
+        .date-item.today-highlight { background-color: #f39c12 !important; color: #ffffff !important; font-weight: bold; }
+
+        .date-item.has-note::before {
+            content: ''; width: 5px; height: 5px; background-color: #e74c3c;
+            border-radius: 50%; position: absolute; left: 2px; top: 8px;
+        }
+
+        .date-item.is-locked::after { content: '🔒'; font-size: 0.55rem; position: absolute; right: 2px; top: 2px; }
+
+        .day-name { font-size: 0.55rem; text-transform: uppercase; opacity: 0.85; }
+        .date-num { font-weight: 700; line-height: 1; }
+
+        /* Paper Sheet Container */
+        .paper-sheet-container {
+            flex: 1; position: relative; display: flex; flex-direction: column;
+            background-color: var(--paper-bg); height: 740px; max-height: 740px; overflow: hidden;
+        }
+
+        .page-emoji-watermark {
+            position: absolute; top: 6px; right: 12px; font-size: 1.3rem; opacity: 0.75; user-select: none; z-index: 2;
+        }
+
+        .paper-content {
+            flex: 1; padding: 8px 15px 45px 15px; display: flex; flex-direction: column;
+            transition: filter 0.3s ease; position: relative; height: 100%; overflow: hidden;
+        }
+
+        .paper-content.locked-blur { filter: blur(8px); pointer-events: none; }
+
+        /* Bottom Controls & Watermark */
+        .paper-bottom-controls {
+            position: absolute; bottom: 4px; left: 12px; right: 12px;
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 5; pointer-events: auto;
+        }
+
+        .page-tabs-wrapper { display: flex; align-items: center; gap: 4px; }
+
+        .page-tab-btn {
+            background: rgba(0,0,0,0.08); border: 1px solid #ccc; border-radius: 4px;
+            padding: 2px 7px; font-size: 0.68rem; font-weight: 600; cursor: pointer; color: #444;
+        }
+
+        .page-tab-btn.active { background: #2c3e50; color: #fff; border-color: #2c3e50; }
+
+        .add-page-btn, .del-page-btn {
+            border: none; border-radius: 12px; padding: 3px 8px; font-size: 0.68rem;
+            font-weight: 600; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 3px; color: white;
+        }
+
+        .add-page-btn { background: #27ae60; }
+        .del-page-btn { background: #c0392b; }
+
+        .paper-bottom-watermark {
+            font-size: 0.68rem; font-weight: 600; color: #a09585; opacity: 0.8; user-select: none;
+        }
+
+        .paper-bottom-watermark span.web-link { color: #d35400; font-style: italic; }
+
+        /* STRICTLY 31 LINES PAPER EDITOR */
+        .ruled-paper-editor {
+            width: 100%; height: 682px; max-height: 682px;
+            border: none; background: transparent;
+            font-family: 'Caveat', cursive; font-size: 1.35rem; line-height: 22px;
+            color: var(--ink-color); outline: none; overflow: hidden !important;
+            background-image: linear-gradient(transparent 95%, var(--line-color) 95%);
+            background-size: 100% 22px; padding-top: 0; word-break: break-word;
+            box-sizing: border-box;
+        }
+
+        /* 3D STONE CARD STYLES */
+        .stone-card {
+            display: block; background: linear-gradient(145deg, #ffffff, #e6e0d4);
+            border: 1.5px solid #b8a99a; border-radius: 8px; padding: 6px 12px;
+            margin: 6px 0; box-shadow: 3px 4px 8px rgba(0,0,0,0.15); font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem; color: #2c3e50; position: relative; user-select: none; max-width: 100%;
+        }
+
+        .stone-card-header {
+            display: flex; align-items: center; justify-content: space-between;
+            font-weight: 700; border-bottom: 1px dashed #c8b9a6; padding-bottom: 3px; margin-bottom: 4px; gap: 10px;
+        }
+
+        .stone-card-title { display: flex; align-items: center; gap: 6px; color: #27ae60; }
+        .stone-card-actions { display: flex; gap: 5px; align-items: center; }
+
+        .stone-card-btn {
+            border: none; border-radius: 4px; padding: 3px 7px;
+            font-size: 0.7rem; cursor: pointer; color: white; display: inline-flex; align-items: center; justify-content: center;
+        }
+
+        .stone-del-btn { background: #e74c3c; }
+
+        .stone-deleted-trace {
+            display: block; background: #f2f3f4; color: #7f8c8d;
+            border: 1px dashed #bdc3c7; border-radius: 6px; padding: 4px 10px;
+            font-size: 0.72rem; font-family: 'Poppins', sans-serif; margin: 6px 0;
+            text-decoration: line-through; opacity: 0.75; cursor: pointer;
+            user-select: none; pointer-events: auto;
+        }
+
+        .stone-deleted-trace span.del-tag { text-decoration: none; font-weight: bold; color: #e74c3c; margin-right: 4px; }
+
+        .collage-container { display: flex; gap: 4px; margin-top: 5px; flex-wrap: wrap; }
+        .collage-img { width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #ccc; }
+
+        /* Lock Overlay */
+        .lock-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.65); display: none; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 10; color: white;
+        }
+
+        .lock-card {
+            background: #2c3e50; padding: 20px; border-radius: 12px;
+            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); max-width: 280px; width: 90%;
+        }
+
+        .lock-card i { font-size: 2rem; color: #f1c40f; margin-bottom: 10px; }
+        .pin-input {
+            width: 100%; padding: 8px; margin: 10px 0; text-align: center;
+            font-size: 1.1rem; letter-spacing: 4px; border-radius: 6px; border: 1px solid #ccc; outline: none;
+        }
+
+        .unlock-btn {
+            background: #2ecc71; color: white; border: none; padding: 8px 16px;
+            border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;
+        }
+
+        .note-header {
+            display: flex; align-items: center; border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 4px; margin-bottom: 4px; height: 28px;
+        }
+
+        .note-header h2 { font-size: 0.85rem; color: var(--text-color); }
+
+        /* Universal Modals */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center;
+        }
+
+        .modal.show { display: flex; }
+
+        .modal-content {
+            background: #ffffff; padding: 20px; border-radius: 12px;
+            max-width: 420px; width: 92%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto;
+        }
+
+        .modal-content h3 { margin-bottom: 12px; color: #2c3e50; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .modal-input-group { margin-bottom: 12px; }
+        .modal-input-group label { display: block; margin-bottom: 4px; font-size: 0.78rem; color: #555; font-weight: 500; }
+        .modal-input-group input, .modal-input-group select, .modal-input-group textarea {
+            width: 100%; padding: 7px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.85rem; outline: none;
+        }
+
+        .modal-buttons { display: flex; gap: 8px; justify-content: flex-end; margin-top: 15px; }
+        .modal-btn { padding: 7px 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
+        .modal-btn.primary { background: #2ecc71; color: white; }
+        .modal-btn.secondary { background: #95a5a6; color: white; }
+
+        /* DASHBOARD GRID CARDS */
+        .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-bottom: 12px; }
+        .dash-card {
+            background: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .dash-card-num { font-size: 1.1rem; font-weight: 700; color: #2c3e50; margin-top: 2px; }
+        .dash-card-label { font-size: 0.68rem; color: #7f8c8d; font-weight: 500; }
+
+        /* Fixed Footer Bar */
+        .footer-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 55px;
+            background-color: var(--header-bg); border-top: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: space-around; padding: 0 5px; z-index: 1000;
+        }
+
+        .footer-btn {
+            background: rgba(255, 255, 255, 0.12); color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 10px;
+            font-size: 0.72rem; font-weight: 500; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 4px;
+        }
+
+        .footer-btn.lock-btn { background: linear-gradient(135deg, #e74c3c, #c0392b); border: none; }
+        .footer-btn.png-btn { background: linear-gradient(135deg, #27ae60, #2ea043); border: none; }
+        .footer-btn.theme-btn { background: #f1c40f; color: #2c3e50; border: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <!-- 🌟 ANIMATED WELCOME SCREEN -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-card">
+            <i class="fa-solid fa-book-journal-whills welcome-icon"></i>
+            <h2 class="welcome-title">My Paper Diary</h2>
+            <p class="welcome-desc">A secure, ultra-fast personal utility diary to track your daily life, expenses, milk, and records.</p>
+            <button class="continue-btn" id="welcomeContinueBtn">Continue to Diary 🚀</button>
+        </div>
+    </div>
+
+    <!-- 🔒 SUBSCRIPTION EXPIRED OVERLAY (Firebase Ready) -->
+    <div class="expiry-overlay" id="expiryOverlay">
+        <div class="expiry-card">
+            <i class="fa-solid fa-lock" style="font-size:2.5rem; color:#e74c3c; margin-bottom:10px;"></i>
+            <h3>Offline License Expired</h3>
+            <p style="font-size:0.78rem; color:#ccc; margin:10px 0;">30 Days Offline Limit Exceeded. Please connect to the internet to renew your subscription plan.</p>
+            <button class="continue-btn" onclick="location.reload()" style="background:#e74c3c; margin-top:10px;">Sync & Renew Online</button>
+        </div>
+    </div>
+
+    <!-- Header Bar -->
+    <header class="header-bar">
+        <div class="header-left">
+            <i class="fa-solid fa-bars hamburger-menu" id="openDrawerBtn"></i>
+        </div>
+        <div class="user-name-card" id="userNameDisplay" title="Click to change name">
+            🌹♥️Meri Diary♥️🌹
+        </div>
+        <div style="width:20px;"></div>
+    </header>
+
+    <!-- Drawer Menu -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <aside class="drawer-menu" id="drawerMenu">
+        <div class="drawer-header">
+            <h3>Diary Menu</h3>
+            <button class="close-drawer-btn" id="closeDrawerBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <nav class="drawer-content">
+            <button class="drawer-link" id="pwaInstallBtn" style="display:none; color:#2ecc71; font-weight:bold;"><i class="fa-solid fa-mobile-screen-button"></i> 📱 Install Mobile App</button>
+            <button class="drawer-link" id="drawerDashboardBtn"><i class="fa-solid fa-chart-line"></i> 📊 Analytics Dashboard</button>
+            <button class="drawer-link" id="drawerExportBtn"><i class="fa-solid fa-download"></i> 📥 Export Backup (JSON)</button>
+            <button class="drawer-link" id="drawerImportBtn"><i class="fa-solid fa-upload"></i> 📤 Import Backup (JSON)</button>
+            <input type="file" id="importFileInput" accept=".json" style="display:none;">
+            <button class="drawer-link" id="drawerResetPinBtn"><i class="fa-solid fa-key"></i> 🔓 Reset Master PIN</button>
+            <a href="#" class="drawer-link"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a>
+            <a href="#" class="drawer-link"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+        </nav>
+    </aside>
+
+    <!-- UNIVERSAL DYNAMIC MODAL -->
+    <div class="modal" id="toolModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Tool Title</h3>
+            <div id="modalBody"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="modalCancelBtn">Cancel</button>
+                <button class="modal-btn primary" id="modalSubmitBtn">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUSTOM FILTERED DASHBOARD MODAL -->
+    <div class="modal" id="dashboardModal">
+        <div class="modal-content">
+            <h3>📊 Analytics Dashboard</h3>
+            <div style="display:flex; gap:8px; margin: 10px 0;">
+                <select id="dashYearSelect" class="attached-select" style="background:#2c3e50; color:#fff; padding:5px 8px; border-radius:6px; flex:1;"></select>
+                <select id="dashMonthSelect" class="attached-select" style="background:#2c3e50; color:#fff; padding:5px 8px; border-radius:6px; flex:1;"></select>
+            </div>
+            <p style="font-size:0.75rem; color:#666; margin-bottom:10px;" id="dashSubtitle"></p>
+            
+            <div class="dash-grid">
+                <div class="dash-card"><div class="dash-card-label">🥛 Milk Received</div><div class="dash-card-num" id="dashMilkLiter">0 L</div></div>
+                <div class="dash-card"><div class="dash-card-label">📋 Attd Present</div><div class="dash-card-num" id="dashAttdDays">0 Days</div></div>
+                <div class="dash-card"><div class="dash-card-label">🧮 Expenses</div><div class="dash-card-num" id="dashExpenseTotal">₹0</div></div>
+                <div class="dash-card"><div class="dash-card-label">🔴 Udhaar Diya</div><div class="dash-card-num" id="dashUdhaarGiven">₹0</div></div>
+                <div class="dash-card"><div class="dash-card-label">🟢 Udhaar Liya</div><div class="dash-card-num" id="dashUdhaarTaken">₹0</div></div>
+                <div class="dash-card"><div class="dash-card-label">🚗 Fuel Spent</div><div class="dash-card-num" id="dashFuelCost">₹0</div></div>
+            </div>
+
+            <h4 style="font-size:0.8rem; margin:10px 0 5px 0; color:#2c3e50;">👤 Saved Contacts:</h4>
+            <div id="dashContactsList" style="font-size:0.75rem; max-height:120px; overflow-y:auto; background:#f0f3f4; padding:6px; border-radius:6px;"></div>
+
+            <div class="modal-buttons" style="margin-top:15px;">
+                <button class="modal-btn primary" id="closeDashBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Modal -->
+    <div class="modal" id="pdfModal">
+        <div class="modal-content">
+            <h3>📄 Download PDF Options</h3>
+            <div class="modal-input-group">
+                <label for="pdfPassword">Set PDF Password (Optional):</label>
+                <input type="password" id="pdfPassword" placeholder="Enter password to protect PDF">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="pdfCancelBtn">Cancel</button>
+                <button class="modal-btn primary" id="pdfNormalBtn">📥 Normal PDF</button>
+                <button class="modal-btn protected" id="pdfProtectedBtn">🔒 Protected PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workspace -->
+    <main class="diary-container">
+
+        <section class="top-attached-bar">
+            <div class="attached-group">
+                <select id="yearSelect" class="attached-select"></select>
+                <select id="monthSelect" class="attached-select"></select>
+                <button class="attached-stamp-btn" id="insertTimeBtn"><i class="fa-solid fa-clock"></i> Stamp</button>
+            </div>
+            <div class="save-status-badge" id="saveStatus">🟢 Saved</div>
+        </section>
+
+        <!-- Dedicated Tools Strip -->
+        <section class="tools-dedicated-row">
+            <button class="map-btn btn-m" id="toolMilk" title="Milk Tracker">🥛 Milk</button>
+            <button class="map-btn btn-a" id="toolAttd" title="Attendance">📋 Attd</button>
+            <button class="map-btn btn-flt" id="toolFleet" title="Vehicle Log">🚗 Fleet</button>
+            <button class="map-btn btn-udh" id="toolUdhaar" title="Udhaar Tracker">💰 Udhaar</button>
+            <button class="map-btn btn-med" id="toolHealth" title="Medicine Tracker">💊 Health</button>
+            <button class="map-btn btn-wrk" id="toolWork" title="Field Hours Tracker">⏱️ Work</button>
+            <button class="map-btn btn-p" id="toolCam" title="Camera/Photos">📷 Photo</button>
+            <button class="map-btn btn-c1" id="toolTrip" title="Trip Log">✈️ Trip</button>
+            <button class="map-btn btn-t1" id="toolCalc" title="Expense Calc">🧮 Calc</button>
+            <button class="map-btn btn-c2" id="toolOrder" title="Order List">🛒 Order</button>
+            <button class="map-btn btn-o" id="toolContact" title="Contact Saver">👤 Contact</button>
+            <button class="map-btn btn-cn" id="toolTask" title="Task & Reminder">📝 Task</button>
+            <button class="map-btn btn-t2" id="toolTheme" title="Paper Theme">🎨 Theme</button>
+            <button class="map-btn btn-r" id="toolFont" title="Font Color">✒️ Ink</button>
+        </section>
+
+        <div class="diary-workspace">
+            <aside class="dates-strip-left" id="datesStrip"></aside>
+
+            <section class="paper-sheet-container" id="paperPrintArea">
+                <div class="page-emoji-watermark" id="emojiWatermark">1️⃣</div>
+
+                <div class="lock-overlay" id="lockOverlay">
+                    <div class="lock-card">
+                        <i class="fa-solid fa-lock"></i>
+                        <h4>Page Locked</h4>
+                        <p style="font-size: 0.75rem; margin-top: 4px;">Enter Master 6-Digit PIN</p>
+                        <input type="password" maxlength="6" id="unlockPinInput" class="pin-input" placeholder="******">
+                        <button class="unlock-btn" id="unlockSubmitBtn">Unlock Note</button>
+                    </div>
+                </div>
+
+                <div class="paper-content" id="paperContent">
+                    <div class="note-header">
+                        <h2 id="selectedDateTitle">Notes for 1</h2>
+                    </div>
+
+                    <!-- STRICTLY 31 LINES PAPER -->
+                    <div class="ruled-paper-editor" id="diaryPaper" contenteditable="true" placeholder="Yahan likhna shuru karein..."></div>
+
+                    <!-- BOTTOM CONTROLS & WATERMARK -->
+                    <div class="paper-bottom-controls">
+                        <div class="page-tabs-wrapper">
+                            <div class="page-tabs-container" id="pageTabsContainer"></div>
+                            <button class="add-page-btn" id="addPageBtn"><i class="fa-solid fa-plus"></i> Page</button>
+                            <button class="del-page-btn" id="delPageBtn"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        <div class="paper-bottom-watermark">
+                            <span id="bottomUserNameWM">🌹 Meri Diary</span> | <span class="web-link">www.mywebsite.com</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-bar">
+        <button class="footer-btn" id="shareBtn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+        <button class="footer-btn lock-btn" id="pdfDownloadBtn"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+        <button class="footer-btn png-btn" id="pngDownloadBtn"><i class="fa-solid fa-image"></i> PNG</button>
+        <button class="footer-btn" id="lockPageBtn"><i class="fa-solid fa-lock" id="lockBtnIcon"></i> Lock Page</button>
+        <button class="footer-btn theme-btn" id="themeToggleBtn"><i class="fa-solid fa-moon"></i> Dark</button>
+    </footer>
+
+    <script>
+        // 🚀 PWA SERVICE WORKER REGISTRATION
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
+        }
+
+        let deferredPrompt;
+        const pwaInstallBtn = document.getElementById("pwaInstallBtn");
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if(pwaInstallBtn) pwaInstallBtn.style.display = "flex";
+        });
+
+        if(pwaInstallBtn) {
+            pwaInstallBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') pwaInstallBtn.style.display = "none";
+                    deferredPrompt = null;
+                }
+            });
+        }
+
+        // ⏱️ OFFLINE LICENSE EXPIRY CHECK (30 Days Limit for Subscription Gate)
+        function checkOfflineLicenseExpiry() {
+            const now = Date.now();
+            let lastSync = localStorage.getItem("diary_last_online_sync");
+            
+            if (navigator.onLine) {
+                localStorage.setItem("diary_last_online_sync", now.toString());
+            } else if (lastSync) {
+                const daysOffline = (now - parseInt(lastSync)) / (1000 * 60 * 60 * 24);
+                if (daysOffline > 30) { // 30 Days Offline Expiry Gate
+                    document.getElementById("expiryOverlay").style.display = "flex";
+                }
+            } else {
+                localStorage.setItem("diary_last_online_sync", now.toString());
+            }
+        }
+        checkOfflineLicenseExpiry();
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const welcomeScreen = document.getElementById("welcomeScreen");
+            const welcomeContinueBtn = document.getElementById("welcomeContinueBtn");
+
+            // Welcome screen state check
+            if (!localStorage.getItem("diary_welcome_seen")) {
+                welcomeScreen.classList.remove("hidden");
+            } else {
+                welcomeScreen.classList.add("hidden");
+            }
+
+            welcomeContinueBtn.onclick = () => {
+                localStorage.setItem("diary_welcome_seen", "true");
+                welcomeScreen.classList.add("hidden");
+            };
+
+            const yearSelect = document.getElementById("yearSelect");
+            const monthSelect = document.getElementById("monthSelect");
+            const datesStrip = document.getElementById("datesStrip");
+            const selectedDateTitle = document.getElementById("selectedDateTitle");
+            const paper = document.getElementById("diaryPaper");
+            const insertTimeBtn = document.getElementById("insertTimeBtn");
+            const saveStatus = document.getElementById("saveStatus");
+
+            const userNameDisplay = document.getElementById("userNameDisplay");
+            const bottomUserNameWM = document.getElementById("bottomUserNameWM");
+            const paperContent = document.getElementById("paperContent");
+            const lockOverlay = document.getElementById("lockOverlay");
+            const unlockPinInput = document.getElementById("unlockPinInput");
+            const unlockSubmitBtn = document.getElementById("unlockSubmitBtn");
+            const lockPageBtn = document.getElementById("lockPageBtn");
+            const lockBtnIcon = document.getElementById("lockBtnIcon");
+
+            const pageTabsContainer = document.getElementById("pageTabsContainer");
+            const addPageBtn = document.getElementById("addPageBtn");
+            const delPageBtn = document.getElementById("delPageBtn");
+            const emojiWatermark = document.getElementById("emojiWatermark");
+
+            const toolModal = document.getElementById("toolModal");
+            const modalTitle = document.getElementById("modalTitle");
+            const modalBody = document.getElementById("modalBody");
+            const modalCancelBtn = document.getElementById("modalCancelBtn");
+            const modalSubmitBtn = document.getElementById("modalSubmitBtn");
+
+            const pdfModal = document.getElementById("pdfModal");
+            const pdfPasswordInput = document.getElementById("pdfPassword");
+
+            const dashboardModal = document.getElementById("dashboardModal");
+            const closeDashBtn = document.getElementById("closeDashBtn");
+            const dashYearSelect = document.getElementById("dashYearSelect");
+            const dashMonthSelect = document.getElementById("dashMonthSelect");
+
+            const pageEmojis = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"];
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            const today = new Date();
+
+            let activeToolSubmit = null;
+
+            // Name Sync
+            let savedName = localStorage.getItem("diary_user_name") || "Meri Diary";
+            function updateNameDisplays() {
+                userNameDisplay.innerHTML = `🌹♥️${savedName}♥️🌹`;
+                bottomUserNameWM.innerHTML = `🌹 ${savedName}`;
+            }
+            updateNameDisplays();
+
+            userNameDisplay.addEventListener("click", () => {
+                let newName = prompt("Apna Naam Likhein:", savedName);
+                if (newName && newName.trim().length > 0) {
+                    savedName = newName.trim();
+                    localStorage.setItem("diary_user_name", savedName);
+                    updateNameDisplays();
+                }
+            });
+
+            for (let y = 2020; y <= 2035; y++) {
+                const opt1 = document.createElement("option");
+                opt1.value = y; opt1.textContent = y;
+                if (y === today.getFullYear()) opt1.selected = true;
+                yearSelect.appendChild(opt1);
+
+                const opt2 = document.createElement("option");
+                opt2.value = y; opt2.textContent = y;
+                if (y === today.getFullYear()) opt2.selected = true;
+                dashYearSelect.appendChild(opt2);
+            }
+
+            monthNames.forEach((m, idx) => {
+                const opt1 = document.createElement("option");
+                opt1.value = idx; opt1.textContent = m;
+                if (idx === today.getMonth()) opt1.selected = true;
+                monthSelect.appendChild(opt1);
+
+                const opt2 = document.createElement("option");
+                opt2.value = idx; opt2.textContent = m;
+                if (idx === today.getMonth()) opt2.selected = true;
+                dashMonthSelect.appendChild(opt2);
+            });
+
+            let currentYear = parseInt(yearSelect.value);
+            let currentMonth = parseInt(monthSelect.value);
+            let activeDate = localStorage.getItem("diary_active_date") || today.getDate();
+            let activePage = 1;
+
+            let globalMasterPin = localStorage.getItem("diary_master_pin") || null;
+
+            function getStorageKey(type, yr = currentYear, mn = currentMonth) {
+                return `diary_${type}_${yr}_${mn}`;
+            }
+
+            let storedNotes = JSON.parse(localStorage.getItem(getStorageKey("notes"))) || {};
+            let lockedPagesMap = JSON.parse(localStorage.getItem(getStorageKey("locked_pages"))) || {};
+
+            function isFutureSelectedDate() {
+                const selectedDateObj = new Date(currentYear, currentMonth, activeDate);
+                const realTodayZeroObj = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                return selectedDateObj > realTodayZeroObj;
+            }
+
+            function updateToolButtonsState() {
+                const isFuture = isFutureSelectedDate();
+                document.getElementById("toolMilk").disabled = isFuture;
+                document.getElementById("toolAttd").disabled = isFuture;
+            }
+
+            function isContentTrulyEmpty(html) {
+                if (!html) return true;
+                const temp = document.createElement("div");
+                temp.innerHTML = html;
+                const text = temp.textContent || temp.innerText || "";
+                const hasCards = temp.querySelectorAll(".stone-card").length > 0;
+                const hasImgs = temp.querySelectorAll("img").length > 0;
+                return (text.trim().length === 0 && !hasCards && !hasImgs);
+            }
+
+            function renderDatesStrip() {
+                datesStrip.innerHTML = "";
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dateObj = new Date(currentYear, currentMonth, i);
+                    const dayName = daysOfWeek[dateObj.getDay()];
+
+                    const dateDiv = document.createElement("div");
+                    dateDiv.classList.add("date-item");
+
+                    if (i == activeDate) dateDiv.classList.add("active");
+                    if (currentYear === today.getFullYear() && currentMonth === today.getMonth() && i === today.getDate()) {
+                        dateDiv.classList.add("today-highlight");
+                    }
+
+                    const dateData = storedNotes[i];
+                    let hasNote = false;
+                    if (dateData) {
+                        if (typeof dateData === 'string' && !isContentTrulyEmpty(dateData)) {
+                            hasNote = true;
+                        } else if (typeof dateData === 'object') {
+                            hasNote = Object.values(dateData).some(val => !isContentTrulyEmpty(val));
+                        }
+                    }
+                    if (hasNote) dateDiv.classList.add("has-note");
+
+                    if (lockedPagesMap[i]) dateDiv.classList.add("is-locked");
+
+                    dateDiv.innerHTML = `
+                        <span class="day-name">${dayName}</span>
+                        <span class="date-num">${i}</span>
+                    `;
+
+                    dateDiv.addEventListener("click", () => {
+                        saveCurrentState();
+                        document.querySelectorAll(".date-item").forEach(el => el.classList.remove("active"));
+                        dateDiv.classList.add("active");
+                        
+                        activeDate = i;
+                        activePage = 1;
+                        localStorage.setItem("diary_active_date", activeDate);
+                        loadDateData(activeDate);
+                    });
+
+                    datesStrip.appendChild(dateDiv);
+                }
+
+                updateToolButtonsState();
+            }
+
+            function renderPagePagination() {
+                pageTabsContainer.innerHTML = "";
+                let dateEntry = storedNotes[activeDate];
+
+                if (!dateEntry || typeof dateEntry === 'string') {
+                    const legacyText = (typeof dateEntry === 'string') ? dateEntry : "";
+                    dateEntry = { 1: legacyText };
+                    storedNotes[activeDate] = dateEntry;
+                }
+
+                const existingPageNums = Object.keys(dateEntry).map(Number).sort((a,b)=>a-b);
+                if (existingPageNums.length === 0) {
+                    existingPageNums.push(1);
+                    dateEntry[1] = "";
+                }
+
+                existingPageNums.forEach(pNum => {
+                    const btn = document.createElement("button");
+                    btn.className = `page-tab-btn ${pNum === activePage ? 'active' : ''}`;
+                    btn.textContent = `P${pNum}`;
+                    btn.onclick = (e) => {
+                        e.preventDefault();
+                        if (activePage === pNum) return;
+                        saveCurrentState();
+                        activePage = pNum;
+                        loadDateData(activeDate);
+                    };
+                    pageTabsContainer.appendChild(btn);
+                });
+
+                emojiWatermark.textContent = pageEmojis[Math.min(activePage - 1, 4)];
+
+                if (existingPageNums.length < 5) {
+                    addPageBtn.style.display = "flex";
+                } else {
+                    addPageBtn.style.display = "none";
+                }
+            }
+
+            addPageBtn.onclick = (e) => {
+                if(e) e.preventDefault();
+                let dateEntry = storedNotes[activeDate];
+                if (!dateEntry || typeof dateEntry === 'string') {
+                    dateEntry = { 1: (typeof dateEntry === 'string') ? dateEntry : "" };
+                }
+
+                const existingPageNums = Object.keys(dateEntry).map(Number);
+                if (existingPageNums.length >= 5) return;
+
+                saveCurrentState();
+                const newPageNum = Math.max(...existingPageNums, 0) + 1;
+                
+                dateEntry[newPageNum] = "";
+                storedNotes[activeDate] = dateEntry;
+                activePage = newPageNum;
+
+                localStorage.setItem(getStorageKey("notes"), JSON.stringify(storedNotes));
+                loadDateData(activeDate);
+            };
+
+            delPageBtn.onclick = (e) => {
+                e.preventDefault();
+                let dateEntry = storedNotes[activeDate];
+                if (!dateEntry || typeof dateEntry === 'string') return;
+
+                const pageKeys = Object.keys(dateEntry).map(Number);
+
+                if (pageKeys.length <= 1) {
+                    if (confirm("Kya aap is page ke saare text aur cards Mitan (Clear) karna chahte hain?")) {
+                        paper.innerHTML = "";
+                        dateEntry[1] = "";
+                        storedNotes[activeDate] = dateEntry;
+                        saveCurrentState();
+                        renderDatesStrip();
+                    }
+                    return;
+                }
+
+                if (confirm(`Kya aap Page ${activePage} ko delete karna chahte hain? Uska data saaf ho jayega.`)) {
+                    delete dateEntry[activePage];
+
+                    const remainingVals = Object.values(dateEntry);
+                    let newMap = {};
+                    remainingVals.forEach((val, idx) => {
+                        newMap[idx + 1] = val;
+                    });
+
+                    storedNotes[activeDate] = newMap;
+                    activePage = 1;
+
+                    localStorage.setItem(getStorageKey("notes"), JSON.stringify(storedNotes));
+                    loadDateData(activeDate);
+                    renderDatesStrip();
+                }
+            };
+
+            function loadDateData(dateNum) {
+                const monthNameStr = monthNames[currentMonth];
+                const dayNameStr = daysOfWeek[new Date(currentYear, currentMonth, dateNum).getDay()];
+                selectedDateTitle.textContent = `Notes for ${dateNum} ${monthNameStr} ${currentYear} (${dayNameStr}) - Page ${activePage}`;
+
+                let dateEntry = storedNotes[dateNum];
+                if (!dateEntry || typeof dateEntry === 'string') {
+                    dateEntry = { 1: (typeof dateEntry === 'string') ? dateEntry : "" };
+                    storedNotes[dateNum] = dateEntry;
+                }
+
+                paper.innerHTML = dateEntry[activePage] || "";
+
+                if (lockedPagesMap[dateNum]) {
+                    paperContent.classList.add("locked-blur");
+                    lockOverlay.style.display = "flex";
+                    lockBtnIcon.className = "fa-solid fa-lock-open";
+                } else {
+                    paperContent.classList.remove("locked-blur");
+                    lockOverlay.style.display = "none";
+                    lockBtnIcon.className = "fa-solid fa-lock";
+                }
+
+                renderPagePagination();
+                updateToolButtonsState();
+                attachCardActions();
+            }
+
+            function saveCurrentState() {
+                saveStatus.textContent = "🟡 Saving...";
+                let dateEntry = storedNotes[activeDate];
+                if (!dateEntry || typeof dateEntry === 'string') {
+                    dateEntry = { 1: (typeof dateEntry === 'string') ? dateEntry : "" };
+                }
+
+                dateEntry[activePage] = paper.innerHTML;
+                storedNotes[activeDate] = dateEntry;
+
+                localStorage.setItem(getStorageKey("notes"), JSON.stringify(storedNotes));
+                
+                setTimeout(() => {
+                    saveStatus.textContent = "🟢 Saved";
+                    renderDatesStrip();
+                }, 400);
+            }
+
+            paper.addEventListener("input", () => {
+                if (paper.scrollHeight > 682) {
+                    let dateEntry = storedNotes[activeDate] || {};
+                    const existingPageNums = Object.keys(dateEntry).map(Number);
+                    
+                    if (existingPageNums.length < 5) {
+                        saveCurrentState();
+                        addPageBtn.click();
+                    }
+                } else {
+                    saveCurrentState();
+                }
+            });
+
+            function onYearMonthChange() {
+                saveCurrentState();
+                currentYear = parseInt(yearSelect.value);
+                currentMonth = parseInt(monthSelect.value);
+
+                storedNotes = JSON.parse(localStorage.getItem(getStorageKey("notes"))) || {};
+                lockedPagesMap = JSON.parse(localStorage.getItem(getStorageKey("locked_pages"))) || {};
+
+                activeDate = 1;
+                activePage = 1;
+                renderDatesStrip();
+                loadDateData(activeDate);
+            }
+
+            yearSelect.addEventListener("change", onYearMonthChange);
+            monthSelect.addEventListener("change", onYearMonthChange);
+
+            function insertCardAtCursor(cardHtml) {
+                paper.focus();
+
+                if (paper.scrollHeight >= 680) {
+                    let dateEntry = storedNotes[activeDate] || {};
+                    const pageCount = Object.keys(dateEntry).length;
+
+                    if (pageCount < 5) {
+                        saveCurrentState();
+                        addPageBtn.click();
+                    } else {
+                        return;
+                    }
+                }
+
+                const containerWrapper = document.createElement("div");
+                containerWrapper.innerHTML = cardHtml;
+                
+                const newLine = document.createElement("div");
+                newLine.innerHTML = "<br>";
+
+                const sel = window.getSelection();
+                if (sel.getRangeAt && sel.rangeCount) {
+                    const range = sel.getRangeAt(0);
+                    range.deleteContents();
+                    
+                    range.insertNode(newLine);
+                    range.insertNode(containerWrapper);
+
+                    range.setStart(newLine, 0);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                } else {
+                    paper.appendChild(containerWrapper);
+                    paper.appendChild(newLine);
+                }
+
+                if (paper.scrollHeight > 682) {
+                    containerWrapper.remove();
+                    newLine.remove();
+                    
+                    let dateEntry = storedNotes[activeDate] || {};
+                    const pageCount = Object.keys(dateEntry).length;
+
+                    if (pageCount < 5) {
+                        saveCurrentState();
+                        addPageBtn.click();
+                        setTimeout(() => insertCardAtCursor(cardHtml), 100);
+                        return;
+                    }
+                }
+
+                attachCardActions();
+                saveCurrentState();
+            }
+
+            function attachCardActions() {
+                paper.querySelectorAll(".stone-del-btn").forEach(btn => {
+                    btn.onclick = function(e) {
+                        e.stopPropagation();
+                        const card = this.closest(".stone-card");
+                        const cardName = this.getAttribute("data-title") || "Record";
+                        const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                        const traceDiv = document.createElement("div");
+                        traceDiv.className = "stone-deleted-trace";
+                        traceDiv.setAttribute("contenteditable", "false");
+                        traceDiv.title = "Double click to permanently purge this entry";
+                        traceDiv.innerHTML = `<span class="del-tag">✕ Deleted:</span> "${cardName}" at ${now} (Double-tap to purge)`;
+                        
+                        card.parentNode.replaceChild(traceDiv, card);
+                        attachCardActions();
+                        saveCurrentState();
+                    };
+                });
+
+                paper.querySelectorAll(".stone-deleted-trace").forEach(trace => {
+                    trace.ondblclick = function(e) {
+                        e.stopPropagation();
+                        if (confirm("Kya aap is deleted trace ko completely erase karna chahte hain?")) {
+                            this.remove();
+                            saveCurrentState();
+                        }
+                    };
+                });
+            }
+
+            function openModal(title, bodyHtml, onSubmit) {
+                modalTitle.innerHTML = title;
+                modalBody.innerHTML = bodyHtml;
+                activeToolSubmit = onSubmit;
+                toolModal.classList.add("show");
+            }
+
+            modalCancelBtn.onclick = () => toolModal.classList.remove("show");
+            modalSubmitBtn.onclick = () => {
+                if (activeToolSubmit) activeToolSubmit();
+                toolModal.classList.remove("show");
+            };
+
+            function getNowTime() {
+                return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+
+            // 🥛 MILK TOOL
+            document.getElementById("toolMilk").onclick = () => {
+                openModal("🥛 Milk Tracker", `
+                    <div class="modal-input-group"><label>Liter Count:</label><input type="number" id="milkLiter" step="0.5" value="1" min="0.5"></div>
+                    <div class="modal-input-group"><label>Milk Received?</label>
+                        <select id="milkStatus">
+                            <option value="Yes">Yes (Aaya hai)</option>
+                            <option value="No">No (Missed)</option>
+                        </select>
+                    </div>
+                `, () => {
+                    const liter = document.getElementById("milkLiter").value;
+                    const status = document.getElementById("milkStatus").value;
+                    const time = getNowTime();
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false" data-card="milk" data-liter="${liter}" data-status="${status}">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">🥛 Milk Record</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Milk Record"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div><b>Liter:</b> ${liter} L | <b>Received:</b> ${status === 'Yes' ? '🟢 Yes' : '🔴 No'}</div>
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 📋 ATTENDANCE TOOL
+            document.getElementById("toolAttd").onclick = () => {
+                openModal("📋 Attendance Record", `
+                    <div class="modal-input-group"><label>Attendance Status:</label>
+                        <select id="attdStatus">
+                            <option value="Full Day">🟢 Full Day (Present)</option>
+                            <option value="Half Day">🟡 Half Day</option>
+                            <option value="Leave">🔴 Leave (Absent)</option>
+                        </select>
+                    </div>
+                `, () => {
+                    const status = document.getElementById("attdStatus").value;
+                    const time = getNowTime();
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false" data-card="attd" data-status="${status}">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">📋 Attendance</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Attendance"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div><b>Status:</b> ${status}</div>
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 🚗 MINI FLEET TOOL
+            document.getElementById("toolFleet").onclick = () => {
+                openModal("🚗 Mini Fleet / Vehicle Log", `
+                    <div class="modal-input-group"><label>Vehicle Name / No:</label><input type="text" id="fltName" placeholder="e.g. Bike / UP-70-AB-1234"></div>
+                    <div class="modal-input-group"><label>Current KM Reading:</label><input type="number" id="fltKm" placeholder="e.g. 42500"></div>
+                    <div class="modal-input-group"><label>Fuel / Repair Amount (₹):</label><input type="number" id="fltAmt" placeholder="e.g. 500"></div>
+                    <div class="modal-input-group"><label>Notes (Optional):</label><input type="text" id="fltNote" placeholder="e.g. Full Tank / Oil Change"></div>
+                `, () => {
+                    const name = document.getElementById("fltName").value || "Vehicle";
+                    const km = document.getElementById("fltKm").value || "N/A";
+                    const amt = document.getElementById("fltAmt").value || "0";
+                    const note = document.getElementById("fltNote").value || "";
+                    const time = getNowTime();
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false" data-card="fleet" data-amt="${amt}">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">🚗 ${name}</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Vehicle Log"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div>🛣️ <b>KM Reading:</b> ${km} km</div>
+                            <div>⛽ <b>Fuel/Cost:</b> ₹${amt} ${note ? `(${note})` : ''}</div>
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 💰 UDHAAR / LENDING TOOL
+            document.getElementById("toolUdhaar").onclick = () => {
+                openModal("💰 Udhaar / Lending Tracker", `
+                    <div class="modal-input-group"><label>Person Name:</label><input type="text" id="udhName" placeholder="e.g. Rahul Sharma"></div>
+                    <div class="modal-input-group"><label>Amount (₹):</label><input type="number" id="udhAmt" placeholder="e.g. 1500"></div>
+                    <div class="modal-input-group"><label>Transaction Type:</label>
+                        <select id="udhType">
+                            <option value="Diya">🔴 Diya hai (Given)</option>
+                            <option value="Liya">🟢 Liya hai (Taken)</option>
+                        </select>
+                    </div>
+                    <div class="modal-input-group"><label>Due Date / Note:</label><input type="text" id="udhNote" placeholder="e.g. Returning next Monday"></div>
+                `, () => {
+                    const name = document.getElementById("udhName").value || "Person";
+                    const amt = document.getElementById("udhAmt").value || "0";
+                    const type = document.getElementById("udhType").value;
+                    const note = document.getElementById("udhNote").value || "";
+                    const time = getNowTime();
+
+                    const isGiven = (type === "Diya");
+                    const typeTag = isGiven ? `<span style="color:#e74c3c; font-weight:bold;">🔴 Diya Hai</span>` : `<span style="color:#2ecc71; font-weight:bold;">🟢 Liya Hai</span>`;
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false" data-card="udhaar" data-amt="${amt}" data-type="${type}">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">💰 Udhaar: ${name}</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Udhaar Record"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div><b>Amount:</b> ₹${amt} (${typeTag})</div>
+                            ${note ? `<div>📝 <b>Note:</b> ${note}</div>` : ''}
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 💊 MEDICINE / HEALTH TOOL
+            document.getElementById("toolHealth").onclick = () => {
+                openModal("💊 Medicine & Health Tracker", `
+                    <div class="modal-input-group"><label>Medicine Name / Test:</label><input type="text" id="medName" placeholder="e.g. Sugar Tablet / BP Check"></div>
+                    <div class="modal-input-group"><label>Dose Timing:</label>
+                        <select id="medDose">
+                            <option value="Morning">🌅 Morning Dose</option>
+                            <option value="Afternoon">☀️ Afternoon Dose</option>
+                            <option value="Night">🌙 Night Dose</option>
+                        </select>
+                    </div>
+                    <div class="modal-input-group"><label>Status:</label>
+                        <select id="medStatus">
+                            <option value="Taken">🟢 Taken (Kha liya)</option>
+                            <option value="Missed">🔴 Missed (Chhoot gaya)</option>
+                        </select>
+                    </div>
+                    <div class="modal-input-group"><label>BP / Sugar Level (Optional):</label><input type="text" id="medVitals" placeholder="e.g. Sugar 120 / BP 120/80"></div>
+                `, () => {
+                    const name = document.getElementById("medName").value || "Medicine";
+                    const dose = document.getElementById("medDose").value;
+                    const status = document.getElementById("medStatus").value;
+                    const vitals = document.getElementById("medVitals").value || "";
+                    const time = getNowTime();
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">💊 ${name}</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Medicine Record"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div><b>Dose:</b> ${dose} | <b>Status:</b> ${status === 'Taken' ? '🟢 Taken' : '🔴 Missed'}</div>
+                            ${vitals ? `<div>🩺 <b>Vitals:</b> ${vitals}</div>` : ''}
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // ⏱️ WORK / FIELD HOURS TRACKER
+            document.getElementById("toolWork").onclick = () => {
+                openModal("⏱️ Field & Work Hours Tracker", `
+                    <div class="modal-input-group"><label>Work / Task Name:</label><input type="text" id="wrkName" placeholder="e.g. Khet me paani lagana"></div>
+                    <div class="modal-input-group"><label>Start Time:</label><input type="time" id="wrkStart" value="08:00"></div>
+                    <div class="modal-input-group"><label>End Time:</label><input type="time" id="wrkEnd" value="12:00"></div>
+                    <div class="modal-input-group"><label>Total Hours (e.g. 4 Hours):</label><input type="text" id="wrkTotal" placeholder="e.g. 4 Hours"></div>
+                `, () => {
+                    const name = document.getElementById("wrkName").value || "Field Work";
+                    const start = document.getElementById("wrkStart").value || "";
+                    const end = document.getElementById("wrkEnd").value || "";
+                    const total = document.getElementById("wrkTotal").value || "4 Hours";
+                    const time = getNowTime();
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">⏱️ ${name}</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Work Hours"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div>⏰ <b>Timing:</b> ${start} - ${end} (${total})</div>
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 📷 CAMERA COLLAGE TOOL
+            document.getElementById("toolCam").onclick = () => {
+                openModal("📷 Upload Photos", `
+                    <div class="modal-input-group"><label>Select 1 to 3 Images:</label><input type="file" id="camFiles" accept="image/*" multiple></div>
+                `, () => {
+                    const files = document.getElementById("camFiles").files;
+                    if (!files || files.length === 0) return;
+
+                    let imagesRead = 0, imgUrls = [];
+                    const limit = Math.min(files.length, 3);
+                    const time = getNowTime();
+
+                    for (let i = 0; i < limit; i++) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            imgUrls.push(e.target.result);
+                            imagesRead++;
+                            if (imagesRead === limit) {
+                                let imgsHtml = imgUrls.map(u => `<img src="${u}" class="collage-img">`).join('');
+                                const html = `
+                                    <div class="stone-card" contenteditable="false">
+                                        <div class="stone-card-header">
+                                            <span class="stone-card-title">📷 Photo Memories</span>
+                                            <div class="stone-card-actions">
+                                                <button class="stone-card-btn stone-del-btn" data-title="Photos"><i class="fa-solid fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="collage-container">${imgsHtml}</div>
+                                        <div style="font-size:0.65rem; color:#888; text-align:right; margin-top:2px;">[${time}]</div>
+                                    </div>
+                                `;
+                                insertCardAtCursor(html);
+                            }
+                        };
+                        reader.readAsDataURL(files[i]);
+                    }
+                });
+            };
+
+            // ✈️ TRIP LOG TOOL
+            document.getElementById("toolTrip").onclick = () => {
+                openModal("✈️ Trip / Location Log", `
+                    <div class="modal-input-group"><label>Trip Title:</label><input type="text" id="tripTitle" placeholder="e.g. Makkah Trip"></div>
+                    <div class="modal-input-group"><label>Location / URL:</label><input type="text" id="tripLoc" placeholder="Google Maps Link"></div>
+                `, () => {
+                    const title = document.getElementById("tripTitle").value || "Trip Log";
+                    const loc = document.getElementById("tripLoc").value || "N/A";
+                    const time = getNowTime();
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">✈️ ${title}</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="${title}"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div>📍 <b>Location:</b> ${loc}</div>
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 🧮 EXPENSE CALCULATOR
+            document.getElementById("toolCalc").onclick = () => {
+                openModal("🧮 Expense Calculator", `
+                    <div class="modal-input-group"><label>Items (Item Amount):</label><textarea id="calcItems" rows="4" placeholder="Biscuit 50&#10;Fare 500"></textarea></div>
+                `, () => {
+                    const raw = document.getElementById("calcItems").value;
+                    const lines = raw.split("\n");
+                    let total = 0, listHtml = "";
+                    const time = getNowTime();
+
+                    lines.forEach(line => {
+                        if (line.trim()) {
+                            const parts = line.trim().split(/\s+/);
+                            const amt = parseFloat(parts[parts.length - 1]);
+                            if (!isNaN(amt)) {
+                                total += amt;
+                                const name = parts.slice(0, parts.length - 1).join(" ") || "Item";
+                                listHtml += `<div>• ${name}: <b>₹${amt}</b></div>`;
+                            }
+                        }
+                    });
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false" data-card="calc" data-total="${total}">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">🧮 Personal Expenses</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Expenses"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            ${listHtml}
+                            <div style="border-top:1px dashed #aaa; margin-top:4px; padding-top:2px;"><b>Total: ₹${total}</b></div>
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 🛒 ORDER LIST TOOL
+            document.getElementById("toolOrder").onclick = () => {
+                openModal("🛒 Order List", `
+                    <div class="modal-input-group"><label>Orders:</label><textarea id="orderItems" rows="4" placeholder="Aata 50*10&#10;Pyaz 30"></textarea></div>
+                `, () => {
+                    const raw = document.getElementById("orderItems").value;
+                    const lines = raw.split("\n");
+                    let listHtml = "";
+                    const time = getNowTime();
+
+                    lines.forEach(line => {
+                        if (line.trim()) listHtml += `<div>🛒 ${line.trim()}</div>`;
+                    });
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">🛒 Order List</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Order List"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            ${listHtml}
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 👤 CONTACT SAVER
+            document.getElementById("toolContact").onclick = () => {
+                openModal("👤 Save Contact", `
+                    <div class="modal-input-group"><label>Name:</label><input type="text" id="cntName"></div>
+                    <div class="modal-input-group"><label>Phone Number:</label><input type="text" id="cntNum"></div>
+                    <div class="modal-input-group"><label>Place / Business Name:</label><input type="text" id="cntBiz"></div>
+                `, () => {
+                    const name = document.getElementById("cntName").value || "Contact";
+                    const num = document.getElementById("cntNum").value || "N/A";
+                    const biz = document.getElementById("cntBiz").value || "N/A";
+                    const time = getNowTime();
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false" data-card="contact" data-name="${name}" data-phone="${num}">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">👤 ${name}</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Contact"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div>📞 <b>Phone:</b> ${num}</div>
+                            <div>🏢 <b>Biz/Place:</b> ${biz}</div>
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 📝 TASK & REMINDER
+            document.getElementById("toolTask").onclick = () => {
+                openModal("📝 Task & Reminder", `
+                    <div class="modal-input-group"><label>Task Topic:</label><textarea id="taskText" rows="4" placeholder="Write task details..."></textarea></div>
+                `, () => {
+                    const text = document.getElementById("taskText").value;
+                    const time = getNowTime();
+
+                    const html = `
+                        <div class="stone-card" contenteditable="false">
+                            <div class="stone-card-header">
+                                <span class="stone-card-title">📝 Task / Reminder</span>
+                                <div class="stone-card-actions">
+                                    <button class="stone-card-btn stone-del-btn" data-title="Task"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div>${text}</div>
+                            <div style="font-size:0.65rem; color:#888; text-align:right;">[${time}]</div>
+                        </div>
+                    `;
+                    insertCardAtCursor(html);
+                });
+            };
+
+            // 🎨 THEME CHANGER
+            document.getElementById("toolTheme").onclick = () => {
+                openModal("🎨 Paper Background Color", `
+                    <div class="modal-input-group">
+                        <label>Select Paper Style:</label>
+                        <select id="paperBgSelect">
+                            <option value="#fdfbf7">Soft Cream (Classic)</option>
+                            <option value="#ffffff">Pure White</option>
+                            <option value="#f0f3f4">Vintage Grey</option>
+                            <option value="#e8f8f5">Soft Mint Green</option>
+                            <option value="#fef9e7">Warm Yellow</option>
+                        </select>
+                    </div>
+                `, () => {
+                    const bg = document.getElementById("paperBgSelect").value;
+                    document.documentElement.style.setProperty('--paper-bg', bg);
+                });
+            };
+
+            // ✒️ FONT INK COLOR
+            document.getElementById("toolFont").onclick = () => {
+                openModal("✒️ Ink Color", `
+                    <div class="modal-input-group">
+                        <label>Select Ink Color:</label>
+                        <select id="inkColorSelect">
+                            <option value="#1a252f">Dark Blue / Black Ink</option>
+                            <option value="#1b4f72">Royal Blue</option>
+                            <option value="#117a65">Emerald Green</option>
+                            <option value="#78281f">Deep Maroon Red</option>
+                        </select>
+                    </div>
+                `, () => {
+                    const ink = document.getElementById("inkColorSelect").value;
+                    document.documentElement.style.setProperty('--ink-color', ink);
+                });
+            };
+
+            // 📊 CUSTOM FILTERABLE DASHBOARD ENGINE
+            function calculateAndRenderDashboard() {
+                const targetYr = parseInt(dashYearSelect.value);
+                const targetMn = parseInt(dashMonthSelect.value);
+
+                let milkLiter = 0, attdDays = 0, expenseTotal = 0, udhaarGiven = 0, udhaarTaken = 0, fuelCost = 0;
+                let contacts = [];
+
+                const key = getStorageKey("notes", targetYr, targetMn);
+                const monthNotes = JSON.parse(localStorage.getItem(key)) || {};
+
+                Object.values(monthNotes).forEach(dateEntry => {
+                    let pageObj = (typeof dateEntry === 'string') ? { 1: dateEntry } : dateEntry;
+                    Object.values(pageObj).forEach(htmlContent => {
+                        const tempDiv = document.createElement("div");
+                        tempDiv.innerHTML = htmlContent;
+
+                        tempDiv.querySelectorAll('[data-card="milk"]').forEach(c => {
+                            if (c.getAttribute("data-status") === "Yes") {
+                                milkLiter += parseFloat(c.getAttribute("data-liter") || 0);
+                            }
+                        });
+
+                        tempDiv.querySelectorAll('[data-card="attd"]').forEach(c => {
+                            if (c.getAttribute("data-status") === "Full Day") attdDays += 1;
+                            else if (c.getAttribute("data-status") === "Half Day") attdDays += 0.5;
+                        });
+
+                        tempDiv.querySelectorAll('[data-card="calc"]').forEach(c => {
+                            expenseTotal += parseFloat(c.getAttribute("data-total") || 0);
+                        });
+
+                        tempDiv.querySelectorAll('[data-card="udhaar"]').forEach(c => {
+                            const amt = parseFloat(c.getAttribute("data-amt") || 0);
+                            if (c.getAttribute("data-type") === "Diya") udhaarGiven += amt;
+                            else udhaarTaken += amt;
+                        });
+
+                        tempDiv.querySelectorAll('[data-card="fleet"]').forEach(c => {
+                            fuelCost += parseFloat(c.getAttribute("data-amt") || 0);
+                        });
+
+                        tempDiv.querySelectorAll('[data-card="contact"]').forEach(c => {
+                            const name = c.getAttribute("data-name");
+                            const phone = c.getAttribute("data-phone");
+                            if (name) contacts.push(`<b>${name}</b>: ${phone}`);
+                        });
+                    });
+                });
+
+                document.getElementById("dashSubtitle").textContent = `Selected Period: ${monthNames[targetMn]} ${targetYr} (${savedName})`;
+                document.getElementById("dashMilkLiter").textContent = milkLiter + " L";
+                document.getElementById("dashAttdDays").textContent = attdDays + " Days";
+                document.getElementById("dashExpenseTotal").textContent = "₹" + expenseTotal;
+                document.getElementById("dashUdhaarGiven").textContent = "₹" + udhaarGiven;
+                document.getElementById("dashUdhaarTaken").textContent = "₹" + udhaarTaken;
+                document.getElementById("dashFuelCost").textContent = "₹" + fuelCost;
+
+                const cntList = document.getElementById("dashContactsList");
+                cntList.innerHTML = contacts.length ? contacts.join("<br>") : "No contacts saved in this month.";
+            }
+
+            dashYearSelect.onchange = calculateAndRenderDashboard;
+            dashMonthSelect.onchange = calculateAndRenderDashboard;
+
+            document.getElementById("drawerDashboardBtn").onclick = () => {
+                drawerMenu.classList.remove("open");
+                drawerOverlay.style.display = "none";
+
+                dashYearSelect.value = currentYear;
+                dashMonthSelect.value = currentMonth;
+
+                calculateAndRenderDashboard();
+                dashboardModal.classList.add("show");
+            };
+
+            closeDashBtn.onclick = () => dashboardModal.classList.remove("show");
+
+            // 📥 EXPORT BACKUP
+            document.getElementById("drawerExportBtn").onclick = () => {
+                let backupData = {};
+                for (let i = 0; i < localStorage.length; i++) {
+                    let k = localStorage.key(i);
+                    backupData[k] = localStorage.getItem(k);
+                }
+
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData));
+                const downloadAnchor = document.createElement("a");
+                downloadAnchor.setAttribute("href", dataStr);
+                downloadAnchor.setAttribute("download", `Diary_Backup_${today.toISOString().slice(0,10)}.json`);
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+            };
+
+            // 📤 IMPORT BACKUP
+            const importFileInput = document.getElementById("importFileInput");
+            document.getElementById("drawerImportBtn").onclick = () => importFileInput.click();
+
+            importFileInput.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const parsedData = JSON.parse(event.target.result);
+                        Object.keys(parsedData).forEach(k => {
+                            localStorage.setItem(k, parsedData[k]);
+                        });
+                        alert("Backup restore ho gaya!");
+                        location.reload();
+                    } catch (err) {
+                        alert("Invalid Backup File!");
+                    }
+                };
+                reader.readAsText(file);
+            };
+
+            // 🔓 RESET MASTER PIN
+            document.getElementById("drawerResetPinBtn").onclick = () => {
+                let nameCheck = prompt(`Security Verification: Confirm karne ke liye apna Registered User Name (${savedName}) enter karein:`);
+                if (nameCheck && nameCheck.trim().toLowerCase() === savedName.toLowerCase()) {
+                    localStorage.removeItem("diary_master_pin");
+                    globalMasterPin = null;
+                    alert("Master PIN reset ho gaya hai! Ab aap Lock Page daba kar naya PIN set kar sakte hain.");
+                } else if (nameCheck) {
+                    alert("Galat Name! Master PIN reset nahi ho saka.");
+                }
+            };
+
+            // MASTER LOCK TOGGLE
+            lockPageBtn.addEventListener("click", () => {
+                if (!globalMasterPin) {
+                    let setPin = prompt("Set 6-Digit Master PIN:");
+                    if (setPin && setPin.length === 6 && !isNaN(setPin)) {
+                        globalMasterPin = setPin;
+                        localStorage.setItem("diary_master_pin", globalMasterPin);
+                        alert("Master PIN set!");
+                    } else { alert("Sahi 6-digit PIN enter karein!"); return; }
+                }
+
+                if (lockedPagesMap[activeDate]) {
+                    delete lockedPagesMap[activeDate];
+                    alert(`Date ${activeDate} unlocked!`);
+                } else {
+                    lockedPagesMap[activeDate] = true;
+                    alert(`🔒 Date ${activeDate} locked!`);
+                }
+
+                localStorage.setItem(getStorageKey("locked_pages"), JSON.stringify(lockedPagesMap));
+                renderDatesStrip();
+                loadDateData(activeDate);
+            });
+
+            unlockSubmitBtn.addEventListener("click", () => {
+                if (unlockPinInput.value === globalMasterPin) {
+                    paperContent.classList.remove("locked-blur");
+                    lockOverlay.style.display = "none";
+                    unlockPinInput.value = "";
+                } else { alert("Galat PIN!"); }
+            });
+
+            // Clean Canvas Capture
+            async function generatePerfectPaperCanvas() {
+                saveCurrentState();
+                await document.fonts.ready;
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                const paperTarget = document.getElementById("paperPrintArea");
+                const clone = paperTarget.cloneNode(true);
+
+                clone.style.position = "absolute";
+                clone.style.top = "-9999px";
+                clone.style.left = "-9999px";
+                clone.style.width = paperTarget.offsetWidth + "px";
+
+                clone.querySelectorAll(".stone-del-btn, .add-page-btn, .del-page-btn").forEach(btn => btn.style.display = "none");
+
+                document.body.appendChild(clone);
+
+                const canvas = await html2canvas(clone, {
+                    scale: 2, useCORS: true, allowTaint: true, backgroundColor: "#fdfbf7", logging: false
+                });
+
+                document.body.removeChild(clone);
+                return canvas;
+            }
+
+            // PNG Download
+            document.getElementById("pngDownloadBtn").onclick = async () => {
+                saveStatus.textContent = "⏳ Generating PNG...";
+                try {
+                    const canvas = await generatePerfectPaperCanvas();
+                    const link = document.createElement("a");
+                    link.download = `Diary_${monthNames[currentMonth]}_${activeDate}_P${activePage}_${currentYear}.png`;
+                    link.href = canvas.toDataURL("image/png", 1.0);
+                    link.click();
+                    saveStatus.textContent = "🟢 Saved";
+                } catch (e) { saveStatus.textContent = "🟢 Saved"; }
+            };
+
+            // PDF Modal
+            document.getElementById("pdfDownloadBtn").onclick = () => {
+                pdfModal.classList.add("show");
+                pdfPasswordInput.value = "";
+            };
+
+            document.getElementById("pdfCancelBtn").onclick = () => pdfModal.classList.remove("show");
+
+            document.getElementById("pdfNormalBtn").onclick = async () => {
+                pdfModal.classList.remove("show");
+                await downloadPDFLogic(null);
+            };
+
+            document.getElementById("pdfProtectedBtn").onclick = async () => {
+                const pass = pdfPasswordInput.value.trim();
+                if (!pass) { alert("Password enter karein!"); return; }
+                pdfModal.classList.remove("show");
+                await downloadPDFLogic(pass);
+            };
+
+            async function downloadPDFLogic(pdfPass) {
+                saveStatus.textContent = "⏳ Generating PDF...";
+                try {
+                    const canvas = await generatePerfectPaperCanvas();
+                    const imgData = canvas.toDataURL("image/png", 1.0);
+                    const { jsPDF } = window.jspdf;
+
+                    let config = { orientation: "portrait", unit: "pt", format: "a4" };
+                    if (pdfPass) {
+                        config.encryption = { userPassword: pdfPass, ownerPassword: pdfPass, userPermissions: ["print", "copy"] };
+                    }
+
+                    const pdf = new jsPDF(config);
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = pdf.internal.pageSize.getHeight();
+                    const margin = 20;
+                    const printableWidth = pdfWidth - (margin * 2);
+                    const printableHeight = (canvas.height * printableWidth) / canvas.width;
+
+                    pdf.addImage(imgData, "PNG", margin, margin, printableWidth, Math.min(printableHeight, pdfHeight - (margin * 2)));
+                    pdf.save(`Diary_${monthNames[currentMonth]}_${activeDate}_P${activePage}_${currentYear}.pdf`);
+                    saveStatus.textContent = "🟢 Saved";
+                } catch (e) { saveStatus.textContent = "🟢 Saved"; }
+            }
+
+            // Share Handler
+            document.getElementById("shareBtn").onclick = async () => {
+                const headingText = selectedDateTitle.textContent;
+                const customShareMsg = `Aaj Tareekh ${headingText} me mere diary ke baare me aapko share kiya hu :-)\n\nRead more at: ${window.location.href}`;
+                if (navigator.share) {
+                    try { await navigator.share({ title: `Diary - ${headingText}`, text: customShareMsg }); } catch (e) {}
+                } else {
+                    navigator.clipboard.writeText(customShareMsg);
+                    alert("Message copied to clipboard!");
+                }
+            };
+
+            // Stamp Time
+            insertTimeBtn.onclick = () => {
+                const formattedTime = getNowTime();
+                paper.innerHTML += ` <b>[${formattedTime}]</b> `;
+                saveCurrentState();
+            };
+
+            // Initial Load
+            renderDatesStrip();
+            loadDateData(activeDate);
+
+            // Drawer Handlers
+            const openDrawerBtn = document.getElementById("openDrawerBtn");
+            const closeDrawerBtn = document.getElementById("closeDrawerBtn");
+            const drawerMenu = document.getElementById("drawerMenu");
+            const drawerOverlay = document.getElementById("drawerOverlay");
+
+            openDrawerBtn.onclick = () => { drawerMenu.classList.add("open"); drawerOverlay.style.display = "block"; };
+            closeDrawerBtn.onclick = () => { drawerMenu.classList.remove("open"); drawerOverlay.style.display = "none"; };
+            drawerOverlay.onclick = () => { drawerMenu.classList.remove("open"); drawerOverlay.style.display = "none"; };
+
+            // Theme Toggle
+            const themeToggleBtn = document.getElementById("themeToggleBtn");
+            themeToggleBtn.onclick = () => {
+                document.body.classList.toggle("dark-mode");
+                themeToggleBtn.innerHTML = document.body.classList.contains("dark-mode") 
+                    ? `<i class="fa-solid fa-sun"></i> Light` 
+                    : `<i class="fa-solid fa-moon"></i> Dark`;
+            };
+        });
+    </script>
+</body>
+</html>
