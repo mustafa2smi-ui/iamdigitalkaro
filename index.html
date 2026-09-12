@@ -794,6 +794,17 @@ function openCategory(category, cardElement) {
     toolsExpandArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 150);
 }
+      categoryCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const category = card.dataset.category;
+          const directUrl = card.dataset.directUrl;
+          if (directUrl && directUrl.trim() !== '') {
+            window.location.href = directUrl;
+            return;
+          }
+          if (category) openCategory(category, card);
+        });
+      });
       // Close when clicking outside
       document.addEventListener('click', (e) => {
         if (!e.target.closest('.category-card') && !e.target.closest('#toolsExpandArea')) {
