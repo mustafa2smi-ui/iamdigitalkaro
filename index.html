@@ -51,14 +51,29 @@
     .container { max-width: 480px; margin: 0 auto; background: #ffffff; min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.03); padding: 0 18px 10px; display: flex; flex-direction: column; }
 
     /* Header */
-    .header { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 12px; position: sticky; top: 0; background: #ffffff; z-index: 20; border-bottom: 1px solid rgba(0,0,0,0.02); }
-    .logo { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; background: linear-gradient(135deg, #0f2b4b, #1e4a6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0; }
+    .header { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 16px 14px 12px; 
+  position: sticky; 
+  top: 0; 
+  background: #0f2b4b; 
+  z-index: 20; 
+  border-bottom: 1px solid rgba(255,255,255,0.08); 
+  border-radius: 0 0 16px 16px;
+  margin: 0 -18px;
+  padding-left: 18px;
+  padding-right: 18px;
+  box-shadow: 0 4px 14px rgba(0,32,64,0.12);
+}
+    .logo { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; color: #ffffff; margin: 0; }
     .header-actions { display: flex; align-items: center; gap: 8px; }
 
     /* Language Dropdown */
     .language-switcher { position: relative; }
-    .lang-toggle { background: #f1f5f9; border: none; padding: 8px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: #1e293b; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: background 0.2s; }
-    .lang-toggle:hover { background: #e2e8f0; }
+    .lang-toggle { background: rgba(255,255,255,0.15); border: none; padding: 8px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: #ffffff; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: background 0.2s; }
+.lang-toggle:hover { background: rgba(255,255,255,0.25); }
     .lang-dropdown { position: absolute; top: 100%; right: 0; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); padding: 6px; margin-top: 4px; min-width: 130px; display: none; z-index: 100; }
     .lang-dropdown.show { display: block; }
     .lang-option { display: block; width: 100%; text-align: left; background: none; border: none; padding: 8px 12px; font-size: 0.85rem; cursor: pointer; border-radius: 8px; color: #334155; font-weight: 500; transition: background 0.2s; }
@@ -66,10 +81,9 @@
     .lang-option.active-lang { background: #eef2ff; color: #0f2b4b; font-weight: 650; }
 
     /* Hamburger */
-    .hamburger { background: #f1f5f9; border: none; width: 44px; height: 44px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; transition: background 0.2s; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: #1e293b; border-radius: 10px; }
-    .hamburger:hover { background: #e2e8f0; }
-
+    .hamburger { background: rgba(255,255,255,0.15); border: none; width: 44px; height: 44px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; transition: background 0.2s; }
+.hamburger span { display: block; width: 22px; height: 2px; background: #ffffff; border-radius: 10px; }
+.hamburger:hover { background: rgba(255,255,255,0.25); }
     /* Side menu */
     .side-menu { position: fixed; top: 0; right: 0; width: 280px; height: 100vh; background: #ffffff; box-shadow: -8px 0 25px rgba(0,0,0,0.06); z-index: 1000; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1); padding: 24px 20px; display: flex; flex-direction: column; }
     .side-menu.open { transform: translateX(0); }
@@ -89,7 +103,17 @@
     .slider-dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; transition: background 0.3s, transform 0.3s; cursor: pointer; }
     .slider-dot.active-dot { background: #0f2b4b; transform: scale(1.3); }
 
-    .intro-text { font-size: 0.95rem; color: #334155; text-align: center; padding: 0 4px; }
+    .intro-text { 
+  font-size: 0.95rem; 
+  color: #334155; 
+  text-align: center; 
+  padding: 14px 16px; 
+  background: #f0fdf4; 
+  border: 1px solid #86efac; 
+  border-radius: 14px; 
+  width: 100%;
+  box-sizing: border-box;
+}
     .short-text { margin-bottom: 6px; font-weight: 600; }
     .full-text { overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.4s ease, opacity 0.3s, margin 0.3s; margin-top: 0; }
     .full-text.expanded { max-height: 180px; opacity: 1; margin-top: 12px; overflow-y: auto; padding-right: 6px; padding-bottom: 16px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
@@ -234,12 +258,22 @@
 
       <!-- Data Loss Warning -->
       <div class="warning-box">
-        <span class="warning-icon">⚠️</span>
-        <div class="warning-content">
-          <strong data-i18n="warning_title">Important: Your data is saved in your browser</strong>
-          <span data-i18n="warning_text">Your bills, records, and information are stored locally in your browser. Clearing browser data, changing devices, or resetting your phone may delete your saved data. Please back up important records regularly.</span>
-        </div>
-      </div>
+  <span class="warning-icon">⚠️</span>
+  <div class="warning-content">
+    <strong data-i18n="warning_title">Important: Your data is saved in your browser</strong>
+    <span data-i18n="warning_text">Your bills, records, and information are stored locally in your browser. Clearing browser data, changing devices, or resetting your phone may delete your saved data. Please back up important records regularly.</span>
+    
+    <div style="margin-top:12px;">
+      <strong data-i18n="warning_why_title" style="display:block; margin-bottom:6px;">❓ Why is this?</strong>
+      <span data-i18n="warning_why_text">Currently, this website does not provide a facility to securely store your data on a Cloud/Backend Server.</span>
+    </div>
+    
+    <div style="margin-top:12px;">
+      <strong data-i18n="warning_future_title" style="display:block; margin-bottom:6px;">👉 In the Future:</strong>
+      <span data-i18n="warning_future_text">We will try to provide a secure Cloud Storage facility in the future.</span>
+    </div>
+  </div>
+</div>
 
       <!-- Tools Categories -->
       <div class="section-title" data-i18n="our_tools_title">📋 Our Tools</div>
@@ -362,8 +396,11 @@
           footer_disclaimer: "Disclaimer",
           copyright: "© 2026 imaaidigitalkaro · Light & Free",
           warning_title: "Important: Your data is saved in your browser",
-          warning_text: "Your bills, records, and information are stored locally in your browser. Clearing browser data, changing devices, or resetting your phone may delete your saved data. Please back up important records regularly.",
-          tools: {
+warning_text: "Your bills, records, and information are stored locally in your browser. Clearing browser data, changing devices, or resetting your phone may delete your saved data. Please back up important records regularly.",
+warning_why_title: "❓ Why is this?",
+warning_why_text: "Currently, this website does not provide a facility to securely store your data on a Cloud/Backend Server (such as Firebase), as maintaining the required Backend/Cloud Storage and its ongoing operational costs is not feasible at this time.",
+warning_future_title: "👉 In the Future:",
+warning_future_text: "We will try to provide a secure Cloud Storage facility in the future, so that your data is not limited to your device and can be securely stored and accessed online whenever needed.", tools: {
             billing: {
               fast_billing: { name: "Fast Billing", description: "Create quick bills for your customers without any delay.", features: ["Quick bill creation", "Easy item and quantity entry", "Mobile-friendly interface", "Print or share bill instantly"] },
               simple_bill: { name: "Simple Bill", description: "Make clean and simple bills with essential details.", features: ["Minimal bill format", "Customer name and date", "Item list with amount", "Download as image"] },
@@ -423,8 +460,11 @@
           footer_disclaimer: "अस्वीकरण",
           copyright: "© 2026 imaaidigitalkaro · हल्का और मुफ्त",
           warning_title: "महत्वपूर्ण: आपका डेटा ब्राउज़र में सहेजा जाता है",
-          warning_text: "आपके बिल, रिकॉर्ड और जानकारी आपके ब्राउज़र में स्थानीय रूप से संग्रहीत होती है। ब्राउज़र डेटा साफ़ करने, डिवाइस बदलने, या फ़ोन रीसेट करने से आपका डेटा हट सकता है। कृपया महत्वपूर्ण रिकॉर्ड नियमित रूप से बैकअप करें।",
-          tools: {
+warning_text: "आपके बिल, रिकॉर्ड और जानकारी आपके ब्राउज़र में स्थानीय रूप से संग्रहीत होती है। ब्राउज़र डेटा साफ़ करने, डिवाइस बदलने, या फ़ोन रीसेट करने से आपका डेटा हट सकता है। कृपया महत्वपूर्ण रिकॉर्ड नियमित रूप से बैकअप करें।",
+warning_why_title: "❓ ऐसा क्यों?",
+warning_why_text: "वर्तमान में इस वेबसाइट पर आपके डेटा को Cloud/Backend Server (जैसे Firebase) पर सुरक्षित रखने की सुविधा उपलब्ध नहीं है, क्योंकि इसके लिए आवश्यक Backend/Cloud Storage और उसकी संचालन लागत को बनाए रखना संभव नहीं है।",
+warning_future_title: "👉 भविष्य में:",
+warning_future_text: "हम प्रयास करेंगे कि भविष्य में ऐसी सुरक्षित Cloud Storage सुविधा उपलब्ध कराई जा सके, जिससे आपका डेटा केवल आपके डिवाइस तक सीमित न रहे और आवश्यकता पड़ने पर उसे सुरक्षित रूप से ऑनलाइन Store तथा Access किया जा सके।", tools: {
             billing: {
               fast_billing: { name: "फास्ट बिलिंग", description: "बिना देरी के अपने ग्राहकों के लिए तुरंत बिल बनाएं।", features: ["त्वरित बिल निर्माण", "आसान आइटम प्रविष्टि", "मोबाइल-फ्रेंडली", "प्रिंट या शेयर करें"] },
               simple_bill: { name: "सिंपल बिल", description: "केवल आवश्यक विवरण के साथ साफ बिल बनाएं।", features: ["न्यूनतम बिल प्रारूप", "ग्राहक नाम और तारीख", "राशि के साथ आइटम", "छवि डाउनलोड"] },
@@ -484,8 +524,11 @@
           footer_disclaimer: "Disclaimer",
           copyright: "© 2026 imaaidigitalkaro · Light & Free",
           warning_title: "Important: Aapka data browser mein save hota hai",
-          warning_text: "Aapke bills, records aur information browser mein locally store hote hain. Browser data clear karne, device change karne, ya phone reset karne se aapka saved data delete ho sakta hai. Please important records regularly backup karein.",
-          tools: {
+warning_text: "Aapke bills, records aur information browser mein locally store hote hain. Browser data clear karne, device change karne, ya phone reset karne se aapka saved data delete ho sakta hai. Please important records regularly backup karein.",
+warning_why_title: "❓ Aisa Kyon?",
+warning_why_text: "Filhaal, is website par aapke data ko Cloud/Backend Server (jaise Firebase) par securely store karne ki facility available nahi hai, kyunki required Backend/Cloud Storage aur uski ongoing operational cost ko maintain karna abhi feasible nahi hai.",
+warning_future_title: "👉 Future Mein:",
+warning_future_text: "Hum koshish karenge ki future mein ek secure Cloud Storage facility available karayi ja sake, jisse aapka data sirf aapke device tak limited na rahe aur zarurat padne par use securely online store aur access kiya ja sake.",tools: {
             billing: {
               fast_billing: { name: "Fast Billing", description: "Apne customers ke liye bina delay ke quick bills banayein.", features: ["Quick bill creation", "Easy item entry", "Mobile-friendly", "Print ya share karein"] },
               simple_bill: { name: "Simple Bill", description: "Essential details ke saath clean bills banayein.", features: ["Minimal format", "Customer name aur date", "Item list", "Image download"] },
