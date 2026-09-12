@@ -749,7 +749,7 @@
         activeCategory = null;
         currentActiveCategory = null;
       }
-
+/*
       function openCategory(category, cardElement) {
         if (activeCategory === category) {
           closeExpandArea();
@@ -775,7 +775,25 @@
           if (category) openCategory(category, card);
         });
       });
-
+      */
+function openCategory(category, cardElement) {
+  if (activeCategory === category) {
+    closeExpandArea();
+    return;
+  }
+  closeExpandArea();
+  currentActiveCategory = category;
+  renderTools(category);
+  toolsExpandArea.classList.add('active');
+  activeCategory = category;
+  cardElement.classList.add('active-card');
+  activeCardElement = cardElement;
+  
+  // Auto-scroll to expanded area
+  setTimeout(() => {
+    toolsExpandArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 150);
+}
       // Close when clicking outside
       document.addEventListener('click', (e) => {
         if (!e.target.closest('.category-card') && !e.target.closest('#toolsExpandArea')) {
