@@ -1,23 +1,100 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Notebook Bill - Free Mobile Billing App</title>
-  <meta name="theme-color" content="#1a252f">
   
-  <!-- SEO Meta Tags -->
-  <meta name="title" content="Notebook Bill - Free Mobile Billing App for Retail Shop">
-  <meta name="description" content="Free mobile billing app for retail shops with Bluetooth thermal receipt generator and digital ledger.">
+  <!-- Primary SEO Meta Tags -->
+  <title>Notebook Bill – Free Offline Billing App for Retail Shops | imadigitalplus</title>
+  <meta name="description" content="Free offline counter billing app with Bluetooth thermal printer support, barcode scanner, digital ledger, and A4/5x8 print. Perfect for retail shops, kirana stores, and small businesses. Works without internet.">
+  <meta name="keywords" content="notebook bill, offline billing app, thermal printer billing, bluetooth receipt generator, retail ledger, digital khata, free billing tool, counter billing app, kirana shop billing">
+  <meta name="author" content="imadigitalplus">
   <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#1a252f">
+  <link rel="canonical" href="https://www.imadigitalplus.com/tools/notebook-bill.html">
 
-  <!-- Favicon Icons -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.ico">
+  <!-- PWA Integration -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png">
 
-  <!-- 🔥 BARCODE SCANNER LIBRARY -->
+  <!-- Open Graph / Social Media Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="imadigitalplus">
+  <meta property="og:title" content="Notebook Bill – Free Offline Billing Tool | imadigitalplus">
+  <meta property="og:description" content="Fast, offline-first thermal receipt generator and daily sales ledger for retail shops. Free forever, no signup required.">
+  <meta property="og:url" content="https://www.imadigitalplus.com/tools/notebook-bill.html">
+  <meta property="og:image" content="https://www.imadigitalplus.com/images/notebook-bill-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Notebook Bill – Free Offline Billing App">
+  <meta name="twitter:description" content="Free offline billing with thermal printer and barcode scanner support for retail shops.">
+  <meta name="twitter:image" content="https://www.imadigitalplus.com/images/notebook-bill-og.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a252f'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='white'%3E🧾%3C/text%3E%3C/svg%3E">
+
+  <!-- Structured Data: WebApplication Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Notebook Bill",
+    "url": "https://www.imadigitalplus.com/tools/notebook-bill.html",
+    "description": "Free offline mobile billing tool with Bluetooth thermal printing, barcode scanning, and daily ledger tracking for retail shops.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, Android, iOS",
+    "author": {
+      "@type": "Organization",
+      "name": "imadigitalplus",
+      "url": "https://www.imadigitalplus.com"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "imadigitalplus",
+      "url": "https://www.imadigitalplus.com"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList Schema (helps Google understand hierarchy) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.imadigitalplus.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Tools",
+        "item": "https://www.imadigitalplus.com/#tools"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Notebook Bill",
+        "item": "https://www.imadigitalplus.com/tools/notebook-bill.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Barcode Scanner Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
-  
+
   <style>
     :root {
       --bg: #1a252f;          
@@ -55,9 +132,31 @@
       overflow: hidden;
     }
 
+    /* Breadcrumb Navigation */
+    .breadcrumb-nav {
+      padding: 4px 10px;
+      background: rgba(0,0,0,0.15);
+      font-size: 11px;
+      color: #95a5a6;
+      flex-shrink: 0;
+      border-radius: 4px 4px 0 0;
+    }
+    .breadcrumb-nav a {
+      color: #1abc9c;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .breadcrumb-nav a:hover {
+      text-decoration: underline;
+    }
+    .breadcrumb-nav span {
+      margin: 0 4px;
+      color: #5b7a9c;
+    }
+
     .brand-header { background: var(--gradient-head); padding: 6px 8px; border-radius: 8px 8px 0 0; box-shadow: 0 2px 8px var(--shadow); flex-shrink: 0; }
     .controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .settings-trigger-btn { background: #34495e; color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 0 8px; font-size: 15px; cursor: pointer; height: 28px; display: flex; align-items: center; justify-content: center; }
+    .settings-trigger-btn { background: #34495e; color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 0 8px; font-size: 15px; cursor: pointer; height: 28px; display: flex; align-items: center; justify-content: center; text-decoration: none; }
     
     .back-to-bill-btn { display: none; background: #e74c3c; color: #fff; border: none; border-radius: 4px; padding: 0 10px; font-size: 12px; font-weight: bold; cursor: pointer; height: 28px; align-items: center; justify-content: center; }
 
@@ -146,11 +245,45 @@
     .bill-meta-details { font-size: 13px; color: var(--ink); font-weight: 600; }
     .bill-meta-details span { color: var(--muted); font-size: 11px; display: block; font-weight: normal; }
 
+    /* Related Tools Section (NEW) */
+    .related-tools {
+      background: #1a252f;
+      padding: 12px 14px;
+      border-top: 2px solid var(--line);
+      flex-shrink: 0;
+    }
+    .related-tools-title {
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .related-tools-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .related-tools-links a {
+      background: #2c3e50;
+      color: #1abc9c;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+    }
+    .related-tools-links a:hover {
+      background: #34495e;
+    }
+
     /* OVERLAY MODALS */
     .settings-modal-overlay {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.75); z-index: 999999; justify-content: center; align-items: center;
-      padding: 15px; box-sizing: border-box; backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.85); z-index: 999999; justify-content: center; align-items: center;
+      padding: 15px; box-sizing: border-box; backdrop-filter: blur(8px);
     }
     .settings-modal-box {
       background: #1a252f; border: 2px solid var(--line); border-radius: 8px; width: 100%;
@@ -164,7 +297,7 @@
     .settings-item-btn {
       background: #2c3e50; border: 1px solid var(--line); color: #fff; padding: 10px 12px;
       border-radius: 6px; font-size: 13px; font-weight: 600; text-align: left; cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between; text-decoration: none;
     }
     .settings-item-btn:active { background: #34495e; }
     .settings-section-lbl { font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase; margin-top: 8px; margin-bottom: 2px; }
@@ -184,7 +317,7 @@
 </head>
 <body>
 
-  <!-- ⚙️ CONTROL CENTER SETTINGS MODAL -->
+  <!-- Settings Modal (unchanged) -->
   <div id="settingsModal" class="settings-modal-overlay">
     <div class="settings-modal-box">
       <div class="settings-header">
@@ -193,8 +326,21 @@
       </div>
 
       <div class="settings-menu-list">
+        <div class="settings-item-btn" style="cursor: default; background: linear-gradient(135deg, #2c3e50, #1a252f); border: 1px solid #1abc9c;">
+          <span>🌐 App Language (भाषा)</span>
+          <select id="appLanguageSelect" onchange="changeAppLanguage(this.value)" style="background:#1a252f; color:#1abc9c; border:1px solid #1abc9c; border-radius:4px; padding:3px 6px; font-weight:bold; font-size:12px; outline:none;">
+            <option value="hinglish" selected>Hinglish</option>
+            <option value="hindi">हिन्दी (Hindi)</option>
+            <option value="english">English</option>
+          </select>
+        </div>
+
+        <a href="https://www.imadigitalplus.com" target="_self" class="settings-item-btn" style="background: #27ae60; border-color: #2ecc71;">
+          <span style="color: #fff; font-weight: bold;">🏠 Back to imadigitalplus Home</span> ➔
+        </a>
+
         <button class="settings-item-btn" onclick="location.reload();">
-          <span>🏠 Refresh Home</span> 🔄
+          <span>🔄 Refresh Notebook</span> ↺
         </button>
 
         <div class="settings-section-lbl">Navigation & Ledgers</div>
@@ -239,25 +385,27 @@
 
         <div class="settings-section-lbl">App Info & Legal</div>
         <button class="settings-item-btn" onclick="shareAppText(); closeSettingsModal();">
-          <span>📤 Share Application</span> 🔗
+          <span>📤 Share Application Link</span> 🔗
         </button>
         <button class="settings-item-btn" onclick="openLegalModal('help');">
           <span>⁉️ Help & User Guide</span> ❓
         </button>
         <button class="settings-item-btn" onclick="openLegalModal('privacy');">
-          <span>🔒 Privacy Policy & Terms</span> 📄
+          <span>🔒 Privacy Policy</span> 📄
+        </button>
+        <button class="settings-item-btn" onclick="openLegalModal('disclaimer');">
+          <span>⚠️ Disclaimer & Loss Alert</span> 📜
         </button>
 
-        <!-- Unlocked Status Banner -->
         <div style="margin-top: 15px; padding: 10px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: bold; background: rgba(39, 174, 96, 0.15); border: 1px solid #27ae60; color: #2ecc71;">
           🟢 Complete Free Edition Active<br>
-          <span style="font-size:10px; color:#bdc3c7;">All Pro Features Fully Unlocked</span>
+          <span style="font-size:10px; color:#bdc3c7;">All Pro Features Fully Unlocked | imadigitalplus</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 📄 LEGAL & HELP MODAL -->
+  <!-- Legal Modal (unchanged) -->
   <div id="legalModal" class="settings-modal-overlay">
     <div class="settings-modal-box">
       <div class="settings-header">
@@ -271,9 +419,19 @@
 
   <div class="wrap">
     
+    <!-- Breadcrumb Navigation (NEW) -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="https://www.imadigitalplus.com/">🏠 Home</a>
+      <span>›</span>
+      <a href="https://www.imadigitalplus.com/#tools">Tools</a>
+      <span>›</span>
+      <span>Notebook Bill</span>
+    </nav>
+
     <div class="brand-header">
       <div class="controls">
         <div style="display: flex; gap: 4px; align-items: center;">
+          <a href="https://www.imadigitalplus.com" class="settings-trigger-btn" title="Back to imadigitalplus Home">🏠</a>
           <button id="btnSettingsOpen" onclick="openSettingsModal()" class="settings-trigger-btn" title="Open Settings">⚙️</button>
           <button id="btnBackToBill" onclick="navToBillMode()" class="back-to-bill-btn">← Back</button>
         </div>
@@ -291,7 +449,7 @@
       </div>
     </div>
 
-    <!-- SCANNER SECTION -->
+    <!-- Scanner Section (unchanged) -->
     <div class="scanner-section" id="scannerWrapperZone">
       <div id="reader"></div>
       <div class="scanner-controls-bar">
@@ -300,7 +458,7 @@
       </div>
     </div>
 
-    <!-- ENTRY FORM OVERLAY CONTAINER -->
+    <!-- DB Entry Panel (unchanged) -->
     <div id="dbEntryPanel" class="db-entry-panel">
       <h4 id="panelTitle">📥 Add Product to Ledger Database</h4>
       <div class="db-grid">
@@ -315,7 +473,7 @@
       <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importAppData(event)">
     </div>
 
-    <!-- MAIN SCROLLABLE NOTEBOOK SHEET -->
+    <!-- Main Paper (unchanged) -->
     <div id="paper" class="paper">
       <div class="paper-header">
         <div id="meta">
@@ -352,7 +510,7 @@
       </div>
     </div>
 
-    <!-- COMPACT BOTTOM CONTROL PANEL -->
+    <!-- Bottom Dashboard (unchanged) -->
     <div class="bottom-dashboard" id="bottomDashboard">
       <div id="modeStatus" class="mode-banner">Billing Active</div>
 
@@ -396,15 +554,149 @@
           <button id="undoBtn" class="btn sq-btn" style="background:#e67e22; border-color:#d35400; color:#fff; display:none;" title="Restore Last Action / Bill">↩️</button>
           <button id="clearBtn" class="btn sq-btn" style="background:var(--danger); color:#fff;" title="Clear All">🗑️</button>
           <button id="localSaveBtn" class="btn sq-btn" style="background:#2ecc71; border-color:#27ae60; color:#fff;" title="Save Bill Data">💾</button>
+          <button id="shareBtn" class="btn sq-btn" style="background:#34495e; border-color:#2c3e50; color:#fff;" title="Share Items Text">📤</button>
           <button id="printBtn" onclick="window.printBill()" class="btn sq-btn" style="background:#9b59b6; border-color:#8e44ad; color:#fff;" title="Print Invoice">🖨️</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Section (NEW) -->
+    <div class="related-tools">
+      <div class="related-tools-title">🔗 Explore More Tools on imadigitalplus</div>
+      <div class="related-tools-links">
+        <a href="https://www.imadigitalplus.com/tools/bahi-khata.html">📒 Bahi Khata</a>
+        <a href="https://www.imadigitalplus.com/tools/personal-diary.html">📔 Personal Diary</a>
+        <a href="https://www.imadigitalplus.com/tools/visiting-card.html">💳 Visiting Card</a>
+        <a href="https://www.imadigitalplus.com/tools/trip-record.html">🗺️ Trip Record</a>
+        <a href="https://www.imadigitalplus.com/">🏠 All Tools</a>
       </div>
     </div>
 
   </div>
 
   <script>
-    // 📄 PRINT PAPER LAYOUT ENGINE
+    /* ==========================================================================
+       🌐 MULTI-LANGUAGE DICTIONARY ENGINE (imadigitalplus)
+       ========================================================================== */
+    let currentAppLang = localStorage.getItem("notebook_app_lang") || "hinglish";
+
+    const I18N_LANG = {
+      hinglish: {
+        privacyTitle: "🔒 Privacy Policy (imadigitalplus)",
+        privacyBody: `
+          <p><b>Notebook Bill by imadigitalplus</b> aapki privacy ko 100% respect karta hai.</p><br>
+          <p><b>Data Storage:</b> Aapka saara billing records, customer details, aur database items aapke apne mobile ke <i>LocalStorage</i> mein privately store rehta hai.</p><br>
+          <p><b>Zero Server Tracking:</b> Koi bhi data hamare external server par send nahi hota. Yeh application 100% offline safe hai.</p>
+        `,
+        disclaimerTitle: "⚠️ Disclaimer & Loss Alert",
+        disclaimerBody: `
+          <p><b>Local Data Dependency:</b> Yeh app device browser storage par depend karti hai.</p><br>
+          <p><b>Data Loss Warning:</b> Agar aap browser ka "Clear Cache / Clear Data" karenge, toh bina backup ke aapka purana records delete ho sakta hai.</p><br>
+          <p><b>Recommendation:</b> Settings mein jakar regular <b>'Backup Data (.json)'</b> download karein.</p>
+        `,
+        helpTitle: "⁉️ User Guide & Shortcuts",
+        helpBody: `
+          <p><b>Quick Shortcuts:</b></p>
+          <ul>
+            <li><b>Item Add:</b> Name aur Price likhein (e.g. <i>Rice 50</i> ya <i>चीनी 40</i>) aur Enter dabayein.</li>
+            <li><b>Math Calculation:</b> Expression math likhein (e.g. <i>Sugar 40*2.5</i>).</li>
+            <li><b>Barcode Scan:</b> 📷 Camera icon daba kar scan karein.</li>
+            <li><b>Undo:</b> Galti se clear hone par ↩️ Undo dabayein.</li>
+          </ul>
+        `,
+        backupWarning: "🚨 Backup restore karne se current data replace ho jayega. Continue?",
+        backupSuccess: "🎉 Data Restore Successful!",
+        backupEmpty: "Export karne ke liye koi saved data nahi mila!",
+        custNameReq: "Data save karne ke liye 'Cust Name' zaroor enter karein!"
+      },
+      hindi: {
+        privacyTitle: "🔒 गोपनीयता नीति (imadigitalplus)",
+        privacyBody: `
+          <p><b>नोटबुक बिल (imadigitalplus)</b> आपकी डेटा गोपनीयता का पूर्ण सम्मान करता है।</p><br>
+          <p><b>डेटा संग्रहण:</b> आपका सारा बिलिंग विवरण और उत्पाद डेटा आपके अपने मोबाइल के <i>स्थानीय भंडारण (LocalStorage)</i> में सुरक्षित रहता है।</p><br>
+          <p><b>कोई बाहरी ट्रैकिंग नहीं:</b> कोई भी डेटा किसी बाहरी सर्वर पर नहीं भेजा जाता। यह ऐप पूर्णतः ऑफलाइन सुरक्षित है।</p>
+        `,
+        disclaimerTitle: "⚠️ अस्वीकरण एवं डेटा चेतावनी",
+        disclaimerBody: `
+          <p><b>डेटा सुरक्षा जिम्मेदारी:</b> यह एप्लिकेशन आपके फोन ब्राउज़र की मेमोरी पर निर्भर करती है।</p><br>
+          <p><b>डेटा हानि चेतावनी:</b> यदि आप फोन से ब्राउज़र का डेटा साफ (Clear Data) करते हैं, तो आपका हिसाब मिट सकता है।</p><br>
+          <p><b>सलाह:</b> नियमित रूप से <b>'Backup Data (.json)'</b> डाउनलोड करके अपने पास सुरक्षित रखें।</p>
+        `,
+        helpTitle: "⁉️ निर्देशिका एवं शॉर्टकट",
+        helpBody: `
+          <p><b>त्वरित शॉर्टकट:</b></p>
+          <ul>
+            <li><b>सामान जोड़ें:</b> नाम और कीमत लिखें (उदा. <i>चीनी 45</i>) और Enter दबाएं।</li>
+            <li><b>सीधी गणना:</b> गणितीय सूत्र लिखें (उदा. <i>आटा 40*5</i>)।</li>
+            <li><b>बारकोड स्कैन:</b> 📷 आइकन दबाकर बारकोड स्कैन करें।</li>
+            <li><b>अनडू (Undo):</b> गलती से साफ होने पर ↩️ बटन दबाकर वापस लाएं।</li>
+          </ul>
+        `,
+        backupWarning: "🚨 बैकअप रिस्टोर करने से वर्तमान डेटा बदल जाएगा। क्या आप जारी रखना चाहते हैं?",
+        backupSuccess: "🎉 डेटा सफलतापूर्वक रिस्टोर हो गया!",
+        backupEmpty: "डाउनलोड करने के लिए कोई डेटा नहीं मिला!",
+        custNameReq: "बिल सेव करने के लिए ग्राहक का नाम दर्ज करें!"
+      },
+      english: {
+        privacyTitle: "🔒 Privacy Policy (imadigitalplus)",
+        privacyBody: `
+          <p><b>Notebook Bill by imadigitalplus</b> respects your privacy completely.</p><br>
+          <p><b>Data Storage:</b> All invoices, customer details, and database records are saved privately inside your device's <i>LocalStorage</i>.</p><br>
+          <p><b>Zero Server Tracking:</b> No personal ledger details are sent to external servers. It is 100% offline secure.</p>
+        `,
+        disclaimerTitle: "⚠️ Disclaimer & Data Warning",
+        disclaimerBody: `
+          <p><b>Local Storage Dependency:</b> This application runs entirely on your browser storage.</p><br>
+          <p><b>Data Loss Alert:</b> Clearing your browser cache/storage will erase unbacked records permanently.</p><br>
+          <p><b>Safety Recommendation:</b> Regularly export your <b>'Backup Data (.json)'</b> file from the settings drawer.</p>
+        `,
+        helpTitle: "⁉️ User Guide & Shortcuts",
+        helpBody: `
+          <p><b>Quick Shortcuts:</b></p>
+          <ul>
+            <li><b>Add Item:</b> Type Item & Price (e.g. <i>Rice 50</i>) and hit Enter.</li>
+            <li><b>Math Calculation:</b> Expression math (e.g. <i>Sugar 40*2.5</i>).</li>
+            <li><b>Barcode Scan:</b> Tap 📷 icon to scan barcode.</li>
+            <li><b>Smart Undo:</b> Tap ↩️ button to restore cleared bill.</li>
+          </ul>
+        `,
+        backupWarning: "🚨 Restoring backup will overwrite current records. Do you want to proceed?",
+        backupSuccess: "🎉 Data Restored Successfully!",
+        backupEmpty: "No saved records found to export!",
+        custNameReq: "Please enter Customer Name to save!"
+      }
+    };
+
+    window.changeAppLanguage = function(langVal) {
+      currentAppLang = langVal;
+      localStorage.setItem("notebook_app_lang", langVal);
+    };
+
+    window.openLegalModal = function(type) {
+      closeSettingsModal();
+      const modal = document.getElementById("legalModal");
+      const title = document.getElementById("legalModalTitle");
+      const body = document.getElementById("legalModalBody");
+      const dict = I18N_LANG[currentAppLang] || I18N_LANG.hinglish;
+      
+      if (type === 'privacy') {
+        title.innerHTML = dict.privacyTitle;
+        body.innerHTML = dict.privacyBody;
+      } else if (type === 'disclaimer') {
+        title.innerHTML = dict.disclaimerTitle;
+        body.innerHTML = dict.disclaimerBody;
+      } else {
+        title.innerHTML = dict.helpTitle;
+        body.innerHTML = dict.helpBody;
+      }
+      if (modal) modal.style.display = "flex";
+    };
+
+    window.closeLegalModal = function() {
+      const modal = document.getElementById("legalModal");
+      if (modal) modal.style.display = "none";
+    };
+
     let currentCompPaperSize = localStorage.getItem("notebook_free_paper_size") || "A4_HALF";
 
     window.changeCompPrintSize = function(sizeVal) {
@@ -467,9 +759,11 @@
       const pSelect = document.getElementById("printPaperSizeSelect");
       if (pSelect) pSelect.value = currentCompPaperSize;
       applyPrintSizeCSS(currentCompPaperSize);
+
+      const lSelect = document.getElementById("appLanguageSelect");
+      if (lSelect) lSelect.value = currentAppLang;
     });
 
-    /* ---------- ⚙️ SETTINGS DRAWER CONTROLLERS ---------- */
     window.openSettingsModal = function() {
       const m = document.getElementById("settingsModal");
       if (m) m.style.display = "flex";
@@ -513,52 +807,19 @@
       localStorage.setItem("notebook_font_size", sizeVal);
     };
 
-    /* ---------- 📄 LEGAL & HELP MODAL CONTROLLERS ---------- */
-    window.openLegalModal = function(type) {
-      closeSettingsModal();
-      const modal = document.getElementById("legalModal");
-      const title = document.getElementById("legalModalTitle");
-      const body = document.getElementById("legalModalBody");
-      
-      if (type === 'privacy') {
-        title.innerHTML = "🔒 Privacy Policy";
-        body.innerHTML = `
-          <p><b>Notebook Bill (Free Edition)</b> completely offline aur private hai.</p><br>
-          <p>Aapka saara data aapke device ke <i>LocalStorage</i> mein 100% surakshit rehta hai. Koi external server par data transfer nahi hota.</p>
-        `;
-      } else {
-        title.innerHTML = "⁉️ User Guide & Help";
-        body.innerHTML = `
-          <p><b>Quick Usage Shortcuts:</b></p>
-          <ul>
-            <li><b>Item Add:</b> Item name aur price likhein (e.g. <i>Rice 50</i>) aur Enter dabayein.</li>
-            <li><b>Calculation:</b> Direct math formula (e.g. <i>Sugar 40*2.5</i>).</li>
-            <li><b>Barcode Scan:</b> Header mein 📷 Icon daba kar barcode scan karein.</li>
-            <li><b>Undo:</b> Delete hone par ↩️ dabakar restore karein.</li>
-          </ul>
-        `;
-      }
-      if (modal) modal.style.display = "flex";
-    };
-
-    window.closeLegalModal = function() {
-      const modal = document.getElementById("legalModal");
-      if (modal) modal.style.display = "none";
-    };
-
     window.shareAppText = function() {
       closeSettingsModal();
-      const shareData = { title: "Notebook Bill", text: "Smart Digital Ledger & Thermal Billing App", url: window.location.href };
+      const shareData = { title: "Notebook Bill by imadigitalplus", text: "Free Smart Digital Ledger & Thermal Billing App", url: window.location.href };
       if (navigator.share) navigator.share(shareData);
       else alert("App Link: " + window.location.href);
     };
 
-    /* ---------- 📤 / 📥 EXPORT & IMPORT BACKUP ENGINE ---------- */
     window.exportAppData = function() {
+      const dict = I18N_LANG[currentAppLang] || I18N_LANG.hinglish;
       try {
         const backupData = {
-          app: "NotebookBillFree",
-          version: "1.0",
+          app: "NotebookBill-imadigitalplus",
+          version: "2.0",
           exportDate: new Date().toLocaleString('en-IN'),
           ledger_db_v3: JSON.parse(localStorage.getItem("ledger_db_v3")) || [],
           notebook_invoice_history: JSON.parse(localStorage.getItem("notebook_invoice_history")) || [],
@@ -566,19 +827,19 @@
         };
 
         if (backupData.ledger_db_v3.length === 0 && backupData.notebook_invoice_history.length === 0) {
-          return alert("Export karne ke liye koi data nahi mila!");
+          return alert(dict.backupEmpty);
         }
 
         const jsonString = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
         const downloadAnchor = document.createElement("a");
         const today = new Date().toISOString().slice(0, 10);
         downloadAnchor.setAttribute("href", jsonString);
-        downloadAnchor.setAttribute("download", `notebook_bill_backup_${today}.json`);
+        downloadAnchor.setAttribute("download", `notebook_bill_${today}.json`);
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
         downloadAnchor.remove();
 
-        alert("🎉 Backup file (.json) successfully download ho gayi!");
+        alert("🎉 Backup file (.json) downloaded!");
       } catch (err) { alert("Export Failed: " + err.message); }
     };
 
@@ -592,6 +853,7 @@
     };
 
     window.importAppData = function(event) {
+      const dict = I18N_LANG[currentAppLang] || I18N_LANG.hinglish;
       const file = event.target.files[0];
       if (!file) return;
 
@@ -603,12 +865,12 @@
             return alert("❌ Invalid Backup File!");
           }
 
-          if (confirm("🚨 Backup import karne se purana data replace hoga. Continue?")) {
+          if (confirm(dict.backupWarning)) {
             if (importedData.ledger_db_v3) localStorage.setItem("ledger_db_v3", JSON.stringify(importedData.ledger_db_v3));
             if (importedData.notebook_invoice_history) localStorage.setItem("notebook_invoice_history", JSON.stringify(importedData.notebook_invoice_history));
             if (importedData.shopName && document.getElementById("shopNameInput")) document.getElementById("shopNameInput").value = importedData.shopName;
 
-            alert("🎉 Data Restore Successful!");
+            alert(dict.backupSuccess);
             location.reload();
           }
         } catch (err) { alert("❌ Import Error: Invalid JSON File."); }
@@ -616,7 +878,6 @@
       reader.readAsText(file);
     };
 
-    /* ---------- 🔍 CUSTOMER WISE FILTER FUNCTIONS ---------- */
     window.filterBillsByCustomer = function() {
       const query = document.getElementById("custSearchInput") ? document.getElementById("custSearchInput").value.trim().toLowerCase() : "";
       if (typeof window.renderBillsHistoryList === "function") window.renderBillsHistoryList(query);
@@ -627,7 +888,7 @@
       if (typeof window.renderBillsHistoryList === "function") window.renderBillsHistoryList();
     };
 
-    /* ---------- 📊 MAIN BILLING APPLICATION CORE ---------- */
+    /* ---------- 📊 MAIN BILLING APPLICATION CORE (unchanged) ---------- */
     (function(){
       const container = document.getElementById("container");
       const totalBox  = document.getElementById("total");
@@ -641,6 +902,7 @@
       const localSaveBtn = document.getElementById("localSaveBtn");
       const clearBtn = document.getElementById("clearBtn");
       const printBtn = document.getElementById("printBtn");
+      const shareBtn = document.getElementById("shareBtn");
       const dbEntryPanel = document.getElementById("dbEntryPanel");
       const dbSaveBtn = document.getElementById("dbSaveBtn");
       const dbListContainer = document.getElementById("dbListContainer");
@@ -760,9 +1022,9 @@
         isProcessingScan = false;
         html5QrCode = new Html5Qrcode("reader");
         const config = { fps: 20, qrbox: { width: 250, height: 150 }, aspectRatio: 1.0 };
-        html5QrCode.start({ facingMode: "environment" }, config, onScanSuccessCallback, onScanErrorCallback)
+        html5QrCode.start({ facingMode: "environment" }, config, onScanSuccessCallback, () => {})
         .then(() => { isScannerRunning = true; })
-        .catch(err => { document.getElementById('scannerWrapperZone').style.display = 'none'; });
+        .catch(() => { document.getElementById('scannerWrapperZone').style.display = 'none'; });
       }
 
       function onScanSuccessCallback(decodedText) {
@@ -818,8 +1080,6 @@
         } else { isScannerRunning = false; document.getElementById('scannerWrapperZone').style.display = 'none'; }
         isProcessingScan = false;
       }
-
-      function onScanErrorCallback(err) {}
 
       document.getElementById('btnCamToggle').addEventListener('click', toggleCameraUI);
 
@@ -896,32 +1156,21 @@
 
       function parseAndSaveNewItem(text) {
         const cleanText = text.trim();
-        if (!cleanText) return;
-
-        if (/\[[a-zA-Z0-9]+\]/.test(cleanText)) return;
-
+        if (!cleanText || /\[[a-zA-Z0-9]+\]/.test(cleanText)) return;
         const words = cleanText.split(/\s+/);
         if (words.length < 2) return;
-
         const itemName = words[0];
         if (/^\d{8,14}$/.test(itemName)) return;
 
         const restPart = words.slice(1).join(' ');
-        const cleaned = restPart
-          .replace(/\b(rs|c|kg|g|ml|ltr|l|pcs|pc|pack|box|gram|carton|bag|dozen)\b/gi, '')
-          .replace(/[₹$€£]/g, '')
-          .trim();
-        
+        const cleaned = restPart.replace(/\b(rs|c|kg|g|ml|ltr|l|pcs|pc|pack|box|gram|carton|bag|dozen)\b/gi, '').replace(/[₹$€£]/g, '').trim();
         if (!itemName || !cleaned) return;
         const tokens = cleaned.split(/\s+/);
         let priceVal = 0;
-        
         for (let i = tokens.length - 1; i >= 0; i--) {
-          const token = tokens[i];
-          if (/^[0-9.]+$/.test(token)) { priceVal = parseFloat(token); break; }
-          if (/[+\-*/^]/.test(token)) break;
+          if (/^[0-9.]+$/.test(tokens[i])) { priceVal = parseFloat(tokens[i]); break; }
+          if (/[+\-*/^]/.test(tokens[i])) break;
         }
-
         if (itemName && priceVal > 0) {
           const exists = itemDatabase.find(i => i.name.toLowerCase() === itemName.toLowerCase() || i.code === itemName);
           if (!exists) {
@@ -936,17 +1185,14 @@
       function renderDatabaseList() {
         dbItemsList.innerHTML = "";
         const sortedDatabase = [...itemDatabase].sort((a, b) => a.name.localeCompare(b.name));
-        
         if(sortedDatabase.length === 0) {
           dbItemsList.innerHTML = "<div style='font-size:13px; color:var(--muted); text-align:center; padding:15px;'>Database list is empty.</div>";
           return;
         }
-
         sortedDatabase.forEach(item => {
           const itemRow = document.createElement("div"); itemRow.className = "db-item-row";
           const details = document.createElement("div"); details.className = "db-item-details";
           details.innerHTML = `${item.name} <span>[Code: ${item.code}] | Price: ₹${item.price}</span>`;
-
           const actions = document.createElement("div"); actions.className = "db-item-actions";
           const editBtn = document.createElement("button"); editBtn.className = "db-action-btn"; editBtn.innerHTML = "✏️";
           editBtn.addEventListener("click", () => {
@@ -958,7 +1204,6 @@
             dbSaveBtn.textContent = "Update Product";
             dbSaveBtn.style.background = "#e67e22"; dbSaveBtn.style.borderColor = "#d35400";
           });
-
           const deleteBtn = document.createElement("button"); deleteBtn.className = "db-action-btn"; deleteBtn.innerHTML = "❌";
           deleteBtn.addEventListener("click", () => {
             if(confirm(`Delete "${item.name}"?`)) {
@@ -967,7 +1212,6 @@
               renderDatabaseList(); render();
             }
           });
-
           actions.appendChild(editBtn); actions.appendChild(deleteBtn);
           itemRow.appendChild(details); itemRow.appendChild(actions);
           dbItemsList.appendChild(itemRow);
@@ -1001,7 +1245,6 @@
         const row = document.createElement("div"); row.className = "row";
         const rowMain = document.createElement("div"); rowMain.className = "row-main";
         const sl = document.createElement("div"); sl.className = "sl"; sl.textContent = i+1;
-
         const wrapper = document.createElement("div"); wrapper.className = "input-wrapper";
         const input = document.createElement("div"); input.className = "input";
         
@@ -1014,7 +1257,6 @@
 
         wrapper.appendChild(input);
         const result = document.createElement("div"); result.className = "result";
-
         rowMain.appendChild(sl); rowMain.appendChild(wrapper); rowMain.appendChild(result);
         const codePatch = document.createElement("div"); codePatch.className = "code-patch";
         row.appendChild(rowMain); row.appendChild(codePatch);
@@ -1034,11 +1276,10 @@
             const suggestBox = document.createElement("div"); suggestBox.className = "suggest-box";
             matches.forEach(match => {
               const itemDiv = document.createElement("div"); itemDiv.className = "suggest-item";
-              const activePrice = match.price;
-              itemDiv.textContent = `${match.name} [${match.code}] - ₹${activePrice}`;
+              itemDiv.textContent = `${match.name} [${match.code}] - ₹${match.price}`;
               const selectItem = (e) => {
                 e.preventDefault(); e.stopPropagation();
-                input.textContent = `${match.name} ${activePrice}`;
+                input.textContent = `${match.name} ${match.price}`;
                 suggestBox.remove(); render(); saveLiveDraft();
                 setCaretToEnd(input); activeInput = input;
               };
@@ -1100,7 +1341,6 @@
           const text = inputEl ? inputEl.textContent.trim() : "";
           const resBox = row.querySelector(".result");
           const patchBox = row.querySelector(".code-patch");
-          
           let val = 0;
 
           const codeMatch = text.match(/\[([a-zA-Z0-9]+)\]/);
@@ -1119,28 +1359,19 @@
           if (currentMode === 'bill') {
             const words = text.split(/\s+/);
             let exprPart = words.length > 1 ? words.slice(1).join(' ') : text;
-            
-            let cleaned = exprPart
-              .replace(/\b(rs|c|kg|g|ml|ltr|l|pcs|pc|pack|box|gram|carton|bag|dozen)\b/gi, '')
-              .replace(/[₹$€£]/g, '')
-              .trim();
-            
+            let cleaned = exprPart.replace(/\b(rs|c|kg|g|ml|ltr|l|pcs|pc|pack|box|gram|carton|bag|dozen)\b/gi, '').replace(/[₹$€£]/g, '').trim();
             cleaned = cleaned.replace(/\s*([+\-*/^])\s*/g, '$1');
             const tokens = cleaned.split(/\s+/);
             let calcExpr = '';
             
             for (let i = tokens.length - 1; i >= 0; i--) {
-              if (/[+\-*/^]/.test(tokens[i]) && /[0-9]/.test(tokens[i])) {
-                calcExpr = tokens[i]; break;
-              }
+              if (/[+\-*/^]/.test(tokens[i]) && /[0-9]/.test(tokens[i])) { calcExpr = tokens[i]; break; }
             }
-            
             if (!calcExpr) {
               for (let i = tokens.length - 1; i >= 0; i--) {
                 if (/^[0-9.]+$/.test(tokens[i])) { calcExpr = tokens[i]; break; }
               }
             }
-            
             if (calcExpr && /[0-9]/.test(calcExpr)) val = evalExpr(calcExpr);
             
             resBox.textContent = val ? val.toLocaleString('en-IN') : "";
@@ -1172,15 +1403,10 @@
         }
 
         finalGrandTotal = Math.max(0, finalGrandTotal);
-
-        const formattedSubtotal = "₹" + subtotal.toLocaleString('en-IN', { maximumFractionDigits: 2 });
-        const formattedTotal = "₹" + finalGrandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 });
-        const formattedWords = "In Words: " + totalInWords(finalGrandTotal);
-
         if (currentMode === 'bill') {
-          if (subtotalValBox) subtotalValBox.textContent = formattedSubtotal;
-          totalBox.textContent = formattedTotal;
-          totalWordsBox.textContent = formattedWords;
+          if (subtotalValBox) subtotalValBox.textContent = "₹" + subtotal.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+          totalBox.textContent = "₹" + finalGrandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+          totalWordsBox.textContent = "In Words: " + totalInWords(finalGrandTotal);
           totalWordsBox.style.display = "block"; 
         } else {
           if (subtotalValBox) subtotalValBox.textContent = "----";
@@ -1228,8 +1454,9 @@
       });
 
       localSaveBtn.addEventListener("click", function() {
+        const dict = I18N_LANG[currentAppLang] || I18N_LANG.hinglish;
         const customerName = document.getElementById("custNameInput").textContent.trim();
-        if(!customerName) { alert("Data save karne ke liye 'Cust Name' zaroor entered karein!"); return; }
+        if(!customerName) { alert(dict.custNameReq); return; }
 
         const dateObj = new Date();
         const yearStamp = dateObj.getFullYear();
@@ -1252,21 +1479,53 @@
         });
 
         localStorage.setItem("notebook_invoice_history", JSON.stringify(savedBillsHistory));
-        alert(`Bill data successfully saved to Browser Storage!\nCode: ${generatedBillCode}`);
+        alert(`Bill data saved! Code: ${generatedBillCode}`);
       });
 
+      if (shareBtn) {
+        shareBtn.addEventListener("click", function() {
+          const shopTitle = document.getElementById("shopNameInput").value || 'Notebook Bill';
+          const cName = document.getElementById('custNameInput').textContent.trim() || "Valued Customer";
+          
+          let validRows = [];
+          [...container.children].forEach(row => {
+            const itemText = row.querySelector(".input").textContent.trim();
+            const itemTotal = row.querySelector(".result").textContent.trim();
+            if(itemText) validRows.push(`${itemText} = ₹${itemTotal || 0}`);
+          });
+
+          if (validRows.length === 0) return alert("Pehle bill mein items add karein!");
+
+          let shareMsg = `🧾 *${shopTitle.toUpperCase()}*\n`;
+          shareMsg += `📅 Date: ${dateEl.textContent} ${timeEl.textContent}\n`;
+          shareMsg += `👤 Customer: ${cName}\n`;
+          shareMsg += `-------------------------\n`;
+          validRows.forEach((it, idx) => {
+            shareMsg += `${idx + 1}. ${it}\n`;
+          });
+          shareMsg += `-------------------------\n`;
+          shareMsg += `💰 *Grand Total: ${totalBox.textContent}*\n`;
+          shareMsg += `🙏 Thank You! Visit Again.\n`;
+          shareMsg += `⚡ Billed via imadigitalplus Notebook`;
+
+          if (navigator.share) {
+            navigator.share({ title: `${shopTitle} Bill`, text: shareMsg }).catch(() => {});
+          } else {
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareMsg)}`, '_blank');
+          }
+        });
+      }
+
       window.executeCSVExport = function() {
-        let csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += "Serial No,Item Description,Amount (INR)\n";
+        let csvContent = "data:text/csv;charset=utf-8,Serial No,Item Description,Amount (INR)\n";
         [...container.children].forEach((row, idx) => {
           const itemText = row.querySelector(".input").textContent.trim().replace(/,/g, " ");
           const itemTotal = row.querySelector(".result").textContent.trim().replace(/,/g, "");
           if(itemText) csvContent += `${idx + 1},"${itemText}",${itemTotal || 0}\n`;
         });
         csvContent += `,,Total: ${totalBox.textContent.replace(/₹|,/g, "")}\n`;
-        const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
-        link.setAttribute("href", encodedUri); link.setAttribute("download", `ledger_report.csv`);
+        link.setAttribute("href", encodeURI(csvContent)); link.setAttribute("download", `ledger_report.csv`);
         document.body.appendChild(link); link.click(); document.body.removeChild(link);
       };
 
@@ -1280,12 +1539,10 @@
         } catch (e) { return text; }
       }
 
-      /* 🖨️ NATIVE DIRECT DESKTOP / COMP PRINT */
       function executeComputerBrowserPrint() {
         window.print();
       }
 
-      /* ---------- 🖨️ BLUETOOTH THERMAL PRINT ENGINE ---------- */
       window.printBill = async function() {
         const printModeDropdown = document.getElementById("printModeSelect");
         const currentPrintMode = printModeDropdown ? printModeDropdown.value : 'ENG';
@@ -1302,11 +1559,7 @@
         });
 
         if (validRows.length === 0) return alert("Pehle Bill mein items add karein!");
-        
-        if (currentPrintMode === 'COMP') {
-          executeComputerBrowserPrint();
-          return;
-        }
+        if (currentPrintMode === 'COMP') { executeComputerBrowserPrint(); return; }
 
         try {
           if (!printerDevice) {
@@ -1324,8 +1577,7 @@
 
           let esc = `\x1B\x40\x1B\x61\x01\x1B\x45\x01${shopTitle.toUpperCase()}\n\x1B\x45\x00OFFLINE COUNTER BILL\n--------------------------------\n`;
           esc += '\x1B\x61\x00Date: ' + dateEl.textContent + ' ' + timeEl.textContent + '\nCust: ' + cName.substring(0, 22) + '\n--------------------------------\n';
-          esc += 'S.No Item                 Amount\n';
-          esc += '--------------------------------\n';
+          esc += 'S.No Item                 Amount\n--------------------------------\n';
           
           for (let i = 0; i < validRows.length; i++) {
             let rowItem = validRows[i];
@@ -1338,7 +1590,6 @@
               if (/[^\x00-\x7F]/.test(rawLineText)) {
                 let wordsPart = rawLineText.replace(/[0-9.\s()+\-*/^]+/g, " ").trim();
                 let mathPart = rawLineText.replace(/[^\d.\s()+\-*/^]+/g, " ").trim();
-                
                 if(wordsPart) {
                   let translatedWords = await autoTranslateText(wordsPart);
                   rawLineText = mathPart ? `${translatedWords} ${mathPart}` : translatedWords;
@@ -1350,7 +1601,6 @@
             let sNo = (i + 1).toString().padEnd(3, ' ');
             let cleanAmt = rowItem.total.replace(/[₹रु]/g, 'Rs.').trim();
             let amtStr = cleanAmt.padStart(9, ' ');
-            
             let maxNameWidth = 32 - sNo.length - amtStr.length;
 
             if (finalPrintName.length <= maxNameWidth) {
@@ -1386,9 +1636,7 @@
           let finalCleanTotal = totalBox.textContent.replace(/[₹रु]/g, 'Rs.');
           esc += "--------------------------------\n" + '\x1B\x61\x02\x1B\x45\x01NET BAL: ' + finalCleanTotal + '\n\x1B\x45\x00' + '\x1B\x61\x01\nTHANK YOU! VISIT AGAIN\n\n\n\n';
           
-          let encoder = new TextEncoder("utf-8");
-          if (currentPrintMode === 'ENG') { encoder = new TextEncoder("ascii"); }
-          
+          let encoder = currentPrintMode === 'ENG' ? new TextEncoder("ascii") : new TextEncoder("utf-8");
           const data = encoder.encode(esc);
           const chunkSize = 100;
           for (let i = 0; i < data.length; i += chunkSize) {
@@ -1487,7 +1735,6 @@
         container.appendChild(makeRow(0)); render();
       });
 
-      // App Initialization
       restoreLiveDraftOnLoad();
 
       const savedDraft = JSON.parse(localStorage.getItem("notebook_bill_autodraft"));
@@ -1511,6 +1758,11 @@
       }
       render();
     })();
+
+    // Register Service Worker (PWA)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+    }
   </script>
 </body>
 </html>
