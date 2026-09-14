@@ -64,7 +64,7 @@
   }
   </script>
 
-  <!-- Structured Data: BreadcrumbList Schema (helps Google understand hierarchy) -->
+  <!-- Structured Data: BreadcrumbList Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -124,7 +124,7 @@
       margin: 0; background: var(--bg); color: var(--ink);
       font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
       display: flex; justify-content: center; align-items: stretch;
-      height: 100vh; height: 100dvh; overflow: hidden; padding: 5px;
+      height: 100vh; height: 100dvh; overflow: hidden; padding: 4px;
     }
 
     .wrap { 
@@ -132,59 +132,60 @@
       overflow: hidden;
     }
 
-    /* Breadcrumb Navigation */
+    /* Compact Breadcrumb Navigation */
     .breadcrumb-nav {
-      padding: 4px 10px;
-      background: rgba(0,0,0,0.15);
-      font-size: 11px;
+      padding: 2px 8px;
+      background: rgba(0,0,0,0.25);
+      font-size: 10px;
       color: #95a5a6;
       flex-shrink: 0;
       border-radius: 4px 4px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
     .breadcrumb-nav a {
       color: #1abc9c;
       text-decoration: none;
       font-weight: 600;
     }
-    .breadcrumb-nav a:hover {
-      text-decoration: underline;
-    }
     .breadcrumb-nav span {
-      margin: 0 4px;
       color: #5b7a9c;
     }
 
-    .brand-header { background: var(--gradient-head); padding: 6px 8px; border-radius: 8px 8px 0 0; box-shadow: 0 2px 8px var(--shadow); flex-shrink: 0; }
+    .brand-header { background: var(--gradient-head); padding: 5px 8px; box-shadow: 0 2px 8px var(--shadow); flex-shrink: 0; }
     .controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .settings-trigger-btn { background: #34495e; color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 0 8px; font-size: 15px; cursor: pointer; height: 28px; display: flex; align-items: center; justify-content: center; text-decoration: none; }
     
     .back-to-bill-btn { display: none; background: #e74c3c; color: #fff; border: none; border-radius: 4px; padding: 0 10px; font-size: 12px; font-weight: bold; cursor: pointer; height: 28px; align-items: center; justify-content: center; }
 
-    .scanner-section { background: #000; padding: 8px; display: none; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .scanner-section { background: #000; padding: 6px; display: none; flex-direction: column; align-items: center; flex-shrink: 0; }
     #reader { width: 100%; max-width: 420px; background: #000; border-radius: 8px; overflow: hidden; }
     .scanner-controls-bar { width: 100%; max-width: 420px; display: flex; justify-content: space-between; padding: 6px 0; gap: 10px; }
-    .scan-action-btn { flex: 1; padding: 10px; border: none; border-radius: 4px; color: white; font-weight: bold; font-size: 13px; cursor: pointer; }
+    .scan-action-btn { flex: 1; padding: 8px; border: none; border-radius: 4px; color: white; font-weight: bold; font-size: 12px; cursor: pointer; }
     .btn-stop-cam { background: #dc3545; }
     .btn-resume-cam { background: #ff9800; }
     
     .cam-toggle-btn { background: #3498db; color: #fff; border: 1px solid #2980b9; border-radius: 4px; padding: 4px 7px; font-size: 11px; font-weight: 700; cursor: pointer; height: 26px; }
-    .db-entry-panel { background: #1a252f; border: 1px solid var(--line); padding: 10px; display: none; flex-direction: column; gap: 8px; margin-bottom: 5px; flex-shrink: 0; }
-    .db-entry-panel h4 { color: #fff; font-size: 13px; margin-bottom: 2px; }
-    .db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 6px; width: 100%; }
-    .db-input { background: #2c3e50; border: 1px solid var(--line); color: #fff; padding: 8px; border-radius: 4px; font-size: 13px; outline: none; width: 100%; }
+    .db-entry-panel { background: #1a252f; border: 1px solid var(--line); padding: 8px; display: none; flex-direction: column; gap: 6px; margin-bottom: 4px; flex-shrink: 0; }
+    .db-entry-panel h4 { color: #fff; font-size: 12px; margin-bottom: 2px; }
+    .db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 6px; width: 100%; }
+    .db-input { background: #2c3e50; border: 1px solid var(--line); color: #fff; padding: 6px 8px; border-radius: 4px; font-size: 12px; outline: none; width: 100%; }
     .db-input::placeholder { color: #95a5a6; }
 
+    /* Main Scrollable Paper Area */
     .paper { 
-      background: var(--paper); display: flex; flex-direction: column; flex: 1; overflow-y: auto; 
-      overflow-x: hidden; position: relative; border-left: 6px solid #e74c3c; 
+      background: var(--paper); display: flex; flex-direction: column; flex: 1 1 0; 
+      min-height: 0; overflow-y: auto; overflow-x: hidden; position: relative; border-left: 6px solid #e74c3c; 
       max-width: 100%; box-sizing: border-box; -webkit-overflow-scrolling: touch;
     }
     .paper::before { content: ""; position: absolute; top: 0; left: 18px; bottom: 0; width: 1px; background: rgba(231, 76, 60, 0.35); pointer-events: none; z-index: 10; }
     
-    .paper-header { padding: 2px 10px 3px 24px; border-bottom: 2px solid var(--line); text-align: center; }
-    #meta { font-size: 10px; font-weight: bold; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 1px; padding-top: 0; }
-    .paper-header h1 { color: var(--ink); font-size: 15px; font-weight: 800; letter-spacing: 1px; margin: 0px 0 2px 0; }
-    .row-list { padding: 5px 5px 20px 24px; flex: 1; }
+    .paper-header { padding: 2px 10px 3px 24px; border-bottom: 2px solid var(--line); text-align: center; flex-shrink: 0; }
+    #meta { font-size: 10px; font-weight: bold; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 1px; }
+    .paper-header h1 { color: var(--ink); font-size: 14px; font-weight: 800; letter-spacing: 1px; margin: 0px 0 2px 0; }
+    
+    .row-list { padding: 5px 5px 25px 24px; flex: 1; overflow-y: visible; }
     .row { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); padding: 2px 0; }
     .row-main { display: flex; align-items: center; width: 100%; }
     .sl { width: 15px; color: var(--muted); font-weight: 700; font-size: 12px; }
@@ -202,82 +203,48 @@
     }
 
     .total-val {
-      font-weight: 800; font-size: 18px; color: var(--accent);
+      font-weight: 800; font-size: 17px; color: var(--accent);
       max-width: 60%; text-align: right; word-break: break-all;
     }
 
     .code-patch { display: none; background: var(--green-patch); color: var(--green-text); font-size: 10px; font-weight: 700; font-style: italic; padding: 0px 4px; border-radius: 3px; margin-top: 1px; align-self: flex-start; margin-left: 18px; }
     .code-patch.visible { display: inline-block; }
 
-    .suggest-box { position: absolute; left: 0; bottom: 100%; width: 100%; background: #ffffff; border: 2px solid var(--line); z-index: 99999; max-height: 140px; overflow-y: auto; box-shadow: 0 -4px 15px rgba(0,0,0,0.25); border-radius: 4px; margin-bottom: 4px; }
-    .suggest-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #f0f0f0; font-size: 14px; color: var(--ink); font-weight: 600; }
+    .suggest-box { position: absolute; left: 0; bottom: 100%; width: 100%; background: #ffffff; border: 2px solid var(--line); z-index: 99999; max-height: 130px; overflow-y: auto; box-shadow: 0 -4px 15px rgba(0,0,0,0.25); border-radius: 4px; margin-bottom: 4px; }
+    .suggest-item { padding: 8px; cursor: pointer; border-bottom: 1px solid #f0f0f0; font-size: 13px; color: var(--ink); font-weight: 600; }
     .suggest-item:active { background: var(--line); }
 
-    .db-list-container { display: none; padding: 10px 10px 10px 24px; flex-direction: column; gap: 8px; }
-    .db-list-header { font-size: 12px; font-weight: bold; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 4px; margin-bottom: 5px; }
-    .db-item-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px dashed var(--line); }
-    .db-item-details { font-size: 14px; color: var(--ink); font-weight: 600; }
+    .db-list-container { display: none; padding: 8px 10px 25px 24px; flex-direction: column; gap: 8px; flex: 1; overflow-y: auto; }
+    .db-list-header { font-size: 11px; font-weight: bold; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 4px; margin-bottom: 4px; }
+    .db-item-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px dashed var(--line); }
+    .db-item-details { font-size: 13px; color: var(--ink); font-weight: 600; }
     .db-item-details span { color: var(--muted); font-size: 11px; font-weight: normal; margin-left: 5px; }
-    .db-item-actions { display: flex; gap: 8px; }
-    .db-action-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px 5px; }
+    .db-item-actions { display: flex; gap: 6px; }
+    .db-action-btn { background: none; border: none; cursor: pointer; font-size: 13px; padding: 2px 4px; }
 
     .bottom-dashboard { 
       background: #111b24; border-radius: 0 0 8px 8px; box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4); 
-      padding: 6px 8px; display: flex; flex-direction: column; gap: 4px; z-index: 1000; 
+      padding: 5px 8px; display: flex; flex-direction: column; gap: 4px; z-index: 1000; 
       flex-shrink: 0; position: relative;
     }
-    .total-board { background: #1a252f; padding: 5px 8px; border-radius: 4px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px; }
+    .total-board { background: #1a252f; padding: 4px 8px; border-radius: 4px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px; }
     .total-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
     .total-lbl { font-weight: bold; color: var(--muted); }
     .words { font-size: 11px; color: var(--muted); font-style: italic; text-align: right; margin-top: 1px; }
 
-    .btn { background: linear-gradient(to bottom, #f1c40f, #f39c12); color: #2c3e50; border: 1px solid #f39c12; border-radius: 4px; cursor: pointer; font-weight: 700; box-shadow: 0 2px 4px var(--shadow); transition: all 0.15s ease; display: flex; align-items: center; justify-content: center; }
-    .sq-btn { width: 44px; height: 42px; font-size: 18px; }
+    .btn { background: linear-gradient(to bottom, #f1c40f, #f39c12); color: #2c3e50; border: 1px solid #f39c12; border-radius: 4px; cursor: pointer; font-weight: 700; box-shadow: 0 2px 4px var(--shadow); display: flex; align-items: center; justify-content: center; }
+    .sq-btn { width: 44px; height: 40px; font-size: 17px; }
     .price-select { background: #34495e; color: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 3px; height: 26px; font-weight: 600; outline: none; cursor: pointer; font-size: 11px; }
     .mode-banner { background: #1abc9c; color: white; text-align: center; font-size: 10px; font-weight: bold; padding: 2px 0; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; }
     .mode-banner.entry { background: #3498db; }
 
     .operator-bar { display: flex; gap: 4px; justify-content: space-between; }
-    .op-btn { flex: 1; background: #34495e; color: #fff; border: 1px solid var(--line); padding: 8px 0; border-radius: 4px; font-size: 18px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+    .op-btn { flex: 1; background: #34495e; color: #fff; border: 1px solid var(--line); padding: 7px 0; border-radius: 4px; font-size: 17px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
     .op-btn:active { background: var(--line); color: #000; }
 
-    .bill-history-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+    .bill-history-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px dashed var(--line); }
     .bill-meta-details { font-size: 13px; color: var(--ink); font-weight: 600; }
     .bill-meta-details span { color: var(--muted); font-size: 11px; display: block; font-weight: normal; }
-
-    /* Related Tools Section (NEW) */
-    .related-tools {
-      background: #1a252f;
-      padding: 12px 14px;
-      border-top: 2px solid var(--line);
-      flex-shrink: 0;
-    }
-    .related-tools-title {
-      font-size: 11px;
-      font-weight: bold;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      letter-spacing: 0.5px;
-    }
-    .related-tools-links {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .related-tools-links a {
-      background: #2c3e50;
-      color: #1abc9c;
-      text-decoration: none;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 6px 10px;
-      border-radius: 4px;
-      border: 1px solid var(--line);
-    }
-    .related-tools-links a:hover {
-      background: #34495e;
-    }
 
     /* OVERLAY MODALS */
     .settings-modal-overlay {
@@ -308,16 +275,14 @@
       .paper { border-radius: 0; }
       .bottom-dashboard {
         border-radius: 0; position: flex; bottom: 0; left: 0; width: 100%;
-        padding-bottom: env(safe-area-inset-bottom, 8px);
+        padding-bottom: env(safe-area-inset-bottom, 6px);
       }
-      .row-list { padding-bottom: 140px; }
-      .db-list-container { padding-bottom: 140px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Settings Modal (unchanged) -->
+  <!-- Settings Modal with Hub Links inside -->
   <div id="settingsModal" class="settings-modal-overlay">
     <div class="settings-modal-box">
       <div class="settings-header">
@@ -383,6 +348,17 @@
           </select>
         </div>
 
+        <div class="settings-section-lbl">🔗 More imadigitalplus Tools</div>
+        <a href="https://www.imadigitalplus.com/tools/bahi-khata.html" class="settings-item-btn">
+          <span>📒 Bahi Khata Ledger</span> ➔
+        </a>
+        <a href="https://www.imadigitalplus.com/tools/personal-diary.html" class="settings-item-btn">
+          <span>📔 Personal Diary</span> ➔
+        </a>
+        <a href="https://www.imadigitalplus.com/tools/visiting-card.html" class="settings-item-btn">
+          <span>💳 Visiting Card Maker</span> ➔
+        </a>
+
         <div class="settings-section-lbl">App Info & Legal</div>
         <button class="settings-item-btn" onclick="shareAppText(); closeSettingsModal();">
           <span>📤 Share Application Link</span> 🔗
@@ -398,14 +374,14 @@
         </button>
 
         <div style="margin-top: 15px; padding: 10px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: bold; background: rgba(39, 174, 96, 0.15); border: 1px solid #27ae60; color: #2ecc71;">
-          🟢 Complete Free Edition Active<br>
-          <span style="font-size:10px; color:#bdc3c7;">All Pro Features Fully Unlocked | imadigitalplus</span>
+          🟢 100% Free Forever Edition<br>
+          <span style="font-size:10px; color:#bdc3c7;">All Pro Features Unlocked | imadigitalplus</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Legal Modal (unchanged) -->
+  <!-- Legal Modal -->
   <div id="legalModal" class="settings-modal-overlay">
     <div class="settings-modal-box">
       <div class="settings-header">
@@ -419,7 +395,7 @@
 
   <div class="wrap">
     
-    <!-- Breadcrumb Navigation (NEW) -->
+    <!-- Compact Top Breadcrumbs for SEO Bot & Users -->
     <nav class="breadcrumb-nav" aria-label="Breadcrumb">
       <a href="https://www.imadigitalplus.com/">🏠 Home</a>
       <span>›</span>
@@ -449,7 +425,7 @@
       </div>
     </div>
 
-    <!-- Scanner Section (unchanged) -->
+    <!-- Scanner Section -->
     <div class="scanner-section" id="scannerWrapperZone">
       <div id="reader"></div>
       <div class="scanner-controls-bar">
@@ -458,7 +434,7 @@
       </div>
     </div>
 
-    <!-- DB Entry Panel (unchanged) -->
+    <!-- DB Entry Panel -->
     <div id="dbEntryPanel" class="db-entry-panel">
       <h4 id="panelTitle">📥 Add Product to Ledger Database</h4>
       <div class="db-grid">
@@ -468,12 +444,12 @@
       </div>
       
       <div style="display: flex; gap: 6px; margin-top: 4px;">
-        <button id="dbSaveBtn" class="btn" style="flex:2; padding: 8px; font-size: 13px; background: #3498db; border-color: #2980b9; color: #fff;">Save to Database</button>
+        <button id="dbSaveBtn" class="btn" style="flex:2; padding: 6px; font-size: 12px; background: #3498db; border-color: #2980b9; color: #fff;">Save to Database</button>
       </div>
       <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importAppData(event)">
     </div>
 
-    <!-- Main Paper (unchanged) -->
+    <!-- Main Notebook Paper Area (Auto Resizes Properly Now) -->
     <div id="paper" class="paper">
       <div class="paper-header">
         <div id="meta">
@@ -492,16 +468,16 @@
 
       <div class="db-list-container" id="dbListContainer">
         <div class="db-list-header">All Saved Products (Alphabetical)</div>
-        <div id="dbItemsList" style="margin-bottom: 20px;"></div>
+        <div id="dbItemsList" style="margin-bottom: 15px;"></div>
         
         <div class="db-list-header" style="background:#e67e22; color:#fff;">Saved Bills History (Latest First)</div>
         
-        <div style="background: #2c3e50; padding: 8px; border-radius: 6px; margin: 8px 0; border: 1px solid var(--line);">
+        <div style="background: #2c3e50; padding: 6px 8px; border-radius: 6px; margin: 6px 0; border: 1px solid var(--line);">
           <div style="display: flex; gap: 6px;">
-            <input type="text" id="custSearchInput" oninput="filterBillsByCustomer()" placeholder="🔍 Customer name se bill khojein..." style="flex: 1; height: 34px; background: #1a252f; border: 1px solid var(--line); color: #fff; padding: 0 10px; border-radius: 4px; font-size: 12px; outline: none;">
-            <button onclick="clearCustSearch()" style="background: #e74c3c; color: white; border: none; padding: 0 10px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 11px;">Reset</button>
+            <input type="text" id="custSearchInput" oninput="filterBillsByCustomer()" placeholder="🔍 Customer name se bill khojein..." style="flex: 1; height: 32px; background: #1a252f; border: 1px solid var(--line); color: #fff; padding: 0 8px; border-radius: 4px; font-size: 11px; outline: none;">
+            <button onclick="clearCustSearch()" style="background: #e74c3c; color: white; border: none; padding: 0 8px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 11px;">Reset</button>
           </div>
-          <div id="custSummaryBox" style="display: none; background: #1a252f; padding: 6px 8px; border-radius: 4px; border-left: 4px solid #1abc9c; font-size: 11px; color: #dcdde1; margin-top: 6px;">
+          <div id="custSummaryBox" style="display: none; background: #1a252f; padding: 5px 8px; border-radius: 4px; border-left: 4px solid #1abc9c; font-size: 11px; color: #dcdde1; margin-top: 5px;">
             Bills Found: <b id="custBillCount" style="color:#1abc9c;">0</b> | Total Purchase: <b id="custTotalAmount" style="color:#e67e22;">₹0</b>
           </div>
         </div>
@@ -510,7 +486,7 @@
       </div>
     </div>
 
-    <!-- Bottom Dashboard (unchanged) -->
+    <!-- Bottom Dashboard -->
     <div class="bottom-dashboard" id="bottomDashboard">
       <div id="modeStatus" class="mode-banner">Billing Active</div>
 
@@ -523,22 +499,22 @@
           <span id="adjustmentLbl" class="total-lbl" style="color: #e67e22;">Discount (0%):</span>
           <span id="adjustmentVal" style="font-weight: 700; color: #e67e22;">-₹0.00</span>
         </div>
-        <div class="total-row" style="border-top: 1px dashed var(--line); padding-top: 3px; margin-top: 2px;">
-          <span class="total-lbl" style="font-size: 14px; color: var(--accent);">Grand Total:</span>
+        <div class="total-row" style="border-top: 1px dashed var(--line); padding-top: 2px; margin-top: 2px;">
+          <span class="total-lbl" style="font-size: 13px; color: var(--accent);">Grand Total:</span>
           <span id="total" class="total-val">₹0.00</span>
         </div>
         <div id="totalWords" class="words">In Words: Zero Rupees Only</div>
       </div>
 
-      <div style="background: #1a252f; padding: 4px 8px; border-radius: 4px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+      <div style="background: #1a252f; padding: 3px 6px; border-radius: 4px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 6px;">
         <span style="color: var(--muted); font-size: 11px; font-weight: bold;">Adjustment (%):</span>
         <div style="display: flex; gap: 4px; flex: 1; justify-content: flex-end;">
           <select id="percentType" style="background: #2c3e50; color: #fff; border: 1px solid var(--line); border-radius: 3px; font-size: 11px; padding: 2px;">
             <option value="DISC">Discount (-)</option>
             <option value="TAX">Tax (+)</option>
           </select>
-          <input type="number" id="percentVal" placeholder="0" min="0" max="100" style="width: 50px; background: #2c3e50; border: 1px solid var(--line); color: #fff; text-align: center; border-radius: 3px; font-size: 12px; outline: none;">
-          <span style="color: #fff; font-size: 12px; align-self: center;">%</span>
+          <input type="number" id="percentVal" placeholder="0" min="0" max="100" style="width: 45px; background: #2c3e50; border: 1px solid var(--line); color: #fff; text-align: center; border-radius: 3px; font-size: 11px; outline: none;">
+          <span style="color: #fff; font-size: 11px; align-self: center;">%</span>
         </div>
       </div>
 
@@ -557,18 +533,6 @@
           <button id="shareBtn" class="btn sq-btn" style="background:#34495e; border-color:#2c3e50; color:#fff;" title="Share Items Text">📤</button>
           <button id="printBtn" onclick="window.printBill()" class="btn sq-btn" style="background:#9b59b6; border-color:#8e44ad; color:#fff;" title="Print Invoice">🖨️</button>
         </div>
-      </div>
-    </div>
-
-    <!-- Related Tools Section (NEW) -->
-    <div class="related-tools">
-      <div class="related-tools-title">🔗 Explore More Tools on imadigitalplus</div>
-      <div class="related-tools-links">
-        <a href="https://www.imadigitalplus.com/tools/bahi-khata.html">📒 Bahi Khata</a>
-        <a href="https://www.imadigitalplus.com/tools/personal-diary.html">📔 Personal Diary</a>
-        <a href="https://www.imadigitalplus.com/tools/visiting-card.html">💳 Visiting Card</a>
-        <a href="https://www.imadigitalplus.com/tools/trip-record.html">🗺️ Trip Record</a>
-        <a href="https://www.imadigitalplus.com/">🏠 All Tools</a>
       </div>
     </div>
 
@@ -697,6 +661,7 @@
       if (modal) modal.style.display = "none";
     };
 
+    // Paper Layout Configuration
     let currentCompPaperSize = localStorage.getItem("notebook_free_paper_size") || "A4_HALF";
 
     window.changeCompPrintSize = function(sizeVal) {
@@ -721,7 +686,7 @@
             body * { visibility: hidden !important; }
             #paper, #paper * { visibility: visible !important; }
             #paper { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; border: none !important; background: #fff !important; color: #000 !important; padding: 10px !important; }
-            .brand-header, .scanner-section, .bottom-dashboard, .settings-modal-overlay, .suggest-box, .code-patch, .paper::before { display: none !important; }
+            .brand-header, .breadcrumb-nav, .scanner-section, .bottom-dashboard, .settings-modal-overlay, .suggest-box, .code-patch, .paper::before { display: none !important; }
             .row { border-bottom: 1px solid #000 !important; padding: 8px 0 !important; }
             .input, .result { color: #000 !important; font-size: 18px !important; font-weight: 800 !important; }
             #custBlock span, #custNameInput { font-size: 16px !important; font-weight: bold !important; color: #000 !important; }
@@ -734,7 +699,7 @@
             body * { visibility: hidden !important; }
             #paper, #paper * { visibility: visible !important; }
             #paper { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; border: none !important; background: #fff !important; color: #000 !important; padding: 5px !important; }
-            .brand-header, .scanner-section, .bottom-dashboard, .settings-modal-overlay, .suggest-box, .code-patch, .paper::before { display: none !important; }
+            .brand-header, .breadcrumb-nav, .scanner-section, .bottom-dashboard, .settings-modal-overlay, .suggest-box, .code-patch, .paper::before { display: none !important; }
             .row { border-bottom: 1px dashed #000 !important; padding: 4px 0 !important; }
             .input, .result { color: #000 !important; font-size: 13px !important; font-weight: 700 !important; }
           }
@@ -746,7 +711,7 @@
             body * { visibility: hidden !important; }
             #paper, #paper * { visibility: visible !important; }
             #paper { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; border: none !important; background: #fff !important; color: #000 !important; padding: 15px !important; }
-            .brand-header, .scanner-section, .bottom-dashboard, .settings-modal-overlay, .suggest-box, .code-patch, .paper::before { display: none !important; }
+            .brand-header, .breadcrumb-nav, .scanner-section, .bottom-dashboard, .settings-modal-overlay, .suggest-box, .code-patch, .paper::before { display: none !important; }
             .row { border-bottom: 1px solid #ccc !important; padding: 6px 0 !important; }
             .input, .result { color: #000 !important; font-size: 15px !important; font-weight: 600 !important; }
           }
@@ -888,7 +853,7 @@
       if (typeof window.renderBillsHistoryList === "function") window.renderBillsHistoryList();
     };
 
-    /* ---------- 📊 MAIN BILLING APPLICATION CORE (unchanged) ---------- */
+    /* Core Billing Script */
     (function(){
       const container = document.getElementById("container");
       const totalBox  = document.getElementById("total");
@@ -1759,7 +1724,6 @@
       render();
     })();
 
-    // Register Service Worker (PWA)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js').catch(() => {});
     }
